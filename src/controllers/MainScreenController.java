@@ -5,8 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import model.Client;
+import model.*;
 
+import javax.xml.bind.JAXB;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,12 +25,14 @@ public class MainScreenController implements Initializable, ControlledScreen
     private TableColumn columnAddress;
     @FXML
     private Button buttonShowClients;
-
     private ScreensController screensController;
+    private HttpHelper httpHelper;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        httpHelper = new HttpHelper();
+
         buttonShowClients.setOnAction((event) -> {
             List<Client> clientList = clientsGet();
             clientsDisplay(clientList);
@@ -43,8 +47,9 @@ public class MainScreenController implements Initializable, ControlledScreen
 //    }
     private List<Client> clientsGet()
     {
-        //TODO contecting to databse and getting clients
-        return null;
+        String str = httpHelper.doGet(Main.url + "/all");
+        Clients clients = JAXB.unmarshal(new StringReader(str), Clients.class);
+        return clients.getClients();
     }
 
     private void clientsDisplay(List<Client> clientList)
