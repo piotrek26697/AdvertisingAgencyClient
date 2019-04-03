@@ -6,11 +6,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class Main extends Application
 {
 
-    public static String screenLoginID = "login";
-    public static String screenLoginFile = "/views/screenLogin.fxml";
+    public static String mainScreenID = "mainScreen";
+    public static String mainScreenFile = "/views/screenMain.fxml";
     public static String screen2ID = "screen2";
     public static String screen2File = "/views/screen2.fxml";
 
@@ -20,10 +21,10 @@ public class Main extends Application
     {
 
         ScreensController screensContainer = new ScreensController();
-        screensContainer.loadScreen(Main.screenLoginID, Main.screenLoginFile);
+        screensContainer.loadScreen(Main.mainScreenID, Main.mainScreenFile);
         screensContainer.loadScreen(Main.screen2ID, Main.screen2File);
 
-        screensContainer.setScreen(Main.screenLoginID);
+        screensContainer.setScreen(Main.mainScreenID);
 
         Group root = new Group();
         root.getChildren().addAll(screensContainer);

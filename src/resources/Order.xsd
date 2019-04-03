@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="Invoice.xsd"/>
+    <xs:include schemaLocation="Advertisement.xsd"/>
     <xs:complexType name="Order">
         <xs:sequence>
             <xs:element name="id" type="xs:int"/>
-            <xs:element name="id_client" type="xs:int"/>
-            <xs:element name="id_invoice" type="xs:int"/>
+            <xs:element name="listInvoice" type="Invoive" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="listAds" type="Advertisement" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

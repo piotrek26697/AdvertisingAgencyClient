@@ -25,7 +25,7 @@ public class Screen2Controller implements Initializable, ControlledScreen
 
     private void goBack()
     {
-        screensController.setScreen(Main.screenLoginID);
+        screensController.setScreen(Main.mainScreenID);
     }
 
     @Override
