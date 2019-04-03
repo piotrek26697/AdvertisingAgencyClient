@@ -11,9 +11,9 @@ public class Main extends Application
 {
 
     public static String mainScreenID = "mainScreen";
-    public static String mainScreenFile = "/views/screenMain.fxml";
+    public static String mainScreenFile = "/resources/screenMain.fxml";
     public static String screen2ID = "screen2";
-    public static String screen2File = "/views/screen2.fxml";
+    public static String screen2File = "/resources/screen2.fxml";
 
 
     @Override
