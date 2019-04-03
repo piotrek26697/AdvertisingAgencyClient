@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-
+    public static String url = "localhost:8080/adAgency";
     public static String mainScreenID = "mainScreen";
     public static String mainScreenFile = "/resources/screenMain.fxml";
     public static String screen2ID = "screen2";

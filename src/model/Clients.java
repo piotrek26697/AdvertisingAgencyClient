@@ -1,7 +1,9 @@
 package model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
+@XmlRootElement
 public class Clients
 {
     private List<Client> clients;
