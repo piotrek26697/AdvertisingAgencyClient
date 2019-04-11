@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.*;
 
@@ -23,16 +25,16 @@ import java.util.ResourceBundle;
 public class MainScreenController implements Initializable
 {
     @FXML
-    private TableView tableClients;
+    private TableView<Client> tableClients;
 
     @FXML
-    private TableColumn columnName;
+    private TableColumn<Client, String> columnName;
 
     @FXML
-    private TableColumn columnLastName;
+    private TableColumn<Client, String> columnLastName;
 
     @FXML
-    private TableColumn columnAddress;
+    private TableColumn<Client, String> columnAddress;
 
     @FXML
     private Button buttonShowClients;
@@ -94,6 +96,10 @@ public class MainScreenController implements Initializable
 
     public void clientsDisplay(List<Client> clientList)
     {
-//TODO displaying clients
+        columnName.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+        columnLastName.setCellValueFactory(new PropertyValueFactory<Client, String>("lastName"));
+        columnAddress.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
+
+        tableClients.setItems(FXCollections.observableArrayList(clientList));
     }
 }

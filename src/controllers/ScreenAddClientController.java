@@ -51,6 +51,7 @@ public class ScreenAddClientController implements Initializable
     {
         if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
         {
+            labelOutput.setText("Adding in progress...");
             Client client = new Client(fieldName.getText(), fieldLastName.getText(), fieldAddress.getText());
             String url = Main.URL + "/client";
             StringWriter writer = new StringWriter();

@@ -9,6 +9,11 @@ import java.net.URL;
 
 public class HttpHelper
 {
+    public String doDelete(String url, String message, String contentType)
+    {
+        return send("DELETE", url, null, null);
+    }
+
     public String doPut(String url, String message, String contentType)
     {
         return send("PUT", url, message, contentType);
