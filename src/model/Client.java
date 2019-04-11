@@ -16,6 +16,17 @@ public class Client implements Serializable
     //TODO list of orders
 
 
+    public Client()
+    {
+    }
+
+    public Client(String name, String lastName, String address)
+    {
+        this.name = name;
+        this.lastName = lastName;
+        this.address = address;
+    }
+
     public int getId()
     {
         return id;

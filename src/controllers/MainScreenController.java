@@ -1,14 +1,20 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.*;
 
 import javax.xml.bind.JAXB;
+import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.List;
@@ -45,6 +51,7 @@ public class MainScreenController implements Initializable
 
     private HttpHelper httpHelper;
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -56,11 +63,27 @@ public class MainScreenController implements Initializable
         });
 
         buttonAddClient.setOnAction((event -> {
-
+            addingClientWindow(event);
         }));
     }
 
-    private List<Client> clientsGet()
+    public void addingClientWindow(ActionEvent event)
+    {
+        try
+        {
+            Parent root = FXMLLoader.load(getClass().getResource("/resources/screenAddClient.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Add Client");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Client> clientsGet()
     {
         String params = "?name=" + fieldName.getText() + "&lastName=" + fieldLastName.getText() + "&address=" + fieldAddress.getText();
         String url = Main.URL + "/client" + params;
@@ -69,7 +92,7 @@ public class MainScreenController implements Initializable
         return clients.getClients();
     }
 
-    private void clientsDisplay(List<Client> clientList)
+    public void clientsDisplay(List<Client> clientList)
     {
 //TODO displaying clients
     }
