@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainScreenController">
@@ -14,6 +16,13 @@
             <TableColumn fx:id="columnAddress" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="375.0" resizable="false" text="Adress" />
         </columns>
       </TableView>
-      <Button fx:id="buttonShowClients" layoutX="858.0" layoutY="87.0" mnemonicParsing="false" text="Show clients" />
+       <Button fx:id="buttonShowClients" layoutX="848.0" layoutY="250.0" mnemonicParsing="false" text="Show clients"/>
+       <Label layoutX="788.0" layoutY="72.0" text="Name:"/>
+       <TextField fx:id="fieldName" layoutX="839.0" layoutY="68.0"/>
+       <TextField fx:id="fieldLastName" layoutX="839.0" layoutY="123.0"/>
+       <TextField fx:id="fieldAddress" layoutX="839.0" layoutY="177.0"/>
+       <Label layoutX="763.0" layoutY="127.0" text="Last Name:"/>
+       <Label layoutX="776.0" layoutY="181.0" text="Address:"/>
+       <Button fx:id="buttonAddClient" layoutX="854.0" layoutY="320.0" mnemonicParsing="false" text="Add client"/>
    </children>
 </AnchorPane>

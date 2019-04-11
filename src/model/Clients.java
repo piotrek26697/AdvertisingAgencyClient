@@ -1,17 +1,14 @@
 package model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
-public class Clients
+public class Clients implements Serializable
 {
-    private List<Client> clients;
-
-    public Clients(List<Client> clients)
-    {
-        this.clients = clients;
-    }
+    private List<Client> clients = new ArrayList<>();
 
     public List<Client> getClients()
     {

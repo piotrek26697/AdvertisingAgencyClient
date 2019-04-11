@@ -1,40 +1,27 @@
 package model;
 
-import controllers.ScreensController;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class Main extends Application
 {
-    public static String url = "localhost:8080/adAgency";
-    public static String mainScreenID = "mainScreen";
-    public static String mainScreenFile = "/resources/screenMain.fxml";
-    public static String screen2ID = "screen2";
-    public static String screen2File = "/resources/screen2.fxml";
-
+    static public final String URL = "http://localhost:8080/agency";
 
     @Override
-    public void start(Stage primaryStage)
+    public void start(Stage primaryStage) throws IOException
     {
-
-        ScreensController screensContainer = new ScreensController();
-        screensContainer.loadScreen(Main.mainScreenID, Main.mainScreenFile);
-        screensContainer.loadScreen(Main.screen2ID, Main.screen2File);
-
-        screensContainer.setScreen(Main.mainScreenID);
-
-        Group root = new Group();
-        root.getChildren().addAll(screensContainer);
-        Scene scene = new Scene(root, 1024, 720);
-
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/screenMain.fxml"));
+        Scene scene = new Scene(root);
         primaryStage.setTitle("Advertising Agency");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
     public static void main(String[] args)
     {

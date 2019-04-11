@@ -1,21 +1,20 @@
 package model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement
-public class Client
+public class Client implements Serializable
 {
     private int id;
+
     private String name;
+
     private String lastName;
+
     private String address;
     //TODO list of orders
 
-    public Client(String name, String lastName)
-    {
-        this.name = name;
-        this.lastName = lastName;
-    }
 
     public int getId()
     {

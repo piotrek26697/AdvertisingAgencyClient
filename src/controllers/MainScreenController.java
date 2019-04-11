@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import model.*;
 
 import javax.xml.bind.JAXB;
@@ -13,19 +14,35 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainScreenController implements Initializable, ControlledScreen
+public class MainScreenController implements Initializable
 {
     @FXML
     private TableView tableClients;
+
     @FXML
     private TableColumn columnName;
+
     @FXML
     private TableColumn columnLastName;
+
     @FXML
     private TableColumn columnAddress;
+
     @FXML
     private Button buttonShowClients;
-    private ScreensController screensController;
+
+    @FXML
+    private Button buttonAddClient;
+
+    @FXML
+    private TextField fieldName;
+
+    @FXML
+    private TextField fieldLastName;
+
+    @FXML
+    private TextField fieldAddress;
+
     private HttpHelper httpHelper;
 
     @Override
@@ -38,28 +55,22 @@ public class MainScreenController implements Initializable, ControlledScreen
             clientsDisplay(clientList);
         });
 
+        buttonAddClient.setOnAction((event -> {
 
+        }));
     }
 
-    //    private void login()
-//    {
-//        screensController.setScreen(Main.screen2ID);
-//    }
     private List<Client> clientsGet()
     {
-        String str = httpHelper.doGet(Main.url + "/all");
-        Clients clients = JAXB.unmarshal(new StringReader(str), Clients.class);
+        String params = "?name=" + fieldName.getText() + "&lastName=" + fieldLastName.getText() + "&address=" + fieldAddress.getText();
+        String url = Main.URL + "/client" + params;
+        String result = httpHelper.doGet(url);
+        Clients clients = JAXB.unmarshal(new StringReader(result), Clients.class);
         return clients.getClients();
     }
 
     private void clientsDisplay(List<Client> clientList)
     {
 //TODO displaying clients
-    }
-
-    @Override
-    public void setScreenParent(ScreensController screenParent)
-    {
-        screensController = screenParent;
     }
 }
