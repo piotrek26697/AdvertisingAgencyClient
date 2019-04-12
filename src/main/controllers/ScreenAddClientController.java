@@ -1,4 +1,4 @@
-package controllers;
+package main.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,11 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Client;
-import model.HttpHelper;
-import model.Main;
+import main.model.Client;
+import main.model.HttpHelper;
+import main.model.Main;
 
 import javax.xml.bind.JAXB;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
 public class ScreenAddClientController implements Initializable
 {
     @FXML
-    private Button buttonReturn;
+    private Button buttonExit;
 
     @FXML
     private Button buttonAdd;
@@ -39,12 +40,19 @@ public class ScreenAddClientController implements Initializable
 
     private HttpHelper httpHelper;
 
+    private final String URL = Main.URL + "/client";
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         httpHelper = new HttpHelper();
-        buttonReturn.setOnAction(event -> close(event));
-        buttonAdd.setOnAction(event -> addClient());
+        buttonExit.setOnAction(event -> close(event));
+        buttonAdd.setOnAction(event -> {
+            addClient();
+            fieldName.clear();
+            fieldAddress.clear();
+            fieldLastName.clear();
+        });
     }
 
     public void addClient()
@@ -53,11 +61,16 @@ public class ScreenAddClientController implements Initializable
         {
             labelOutput.setText("Adding in progress...");
             Client client = new Client(fieldName.getText(), fieldLastName.getText(), fieldAddress.getText());
-            String url = Main.URL + "/client";
             StringWriter writer = new StringWriter();
             JAXB.marshal(client, writer);
-            httpHelper.doPost(url, writer.toString(), "application/xml");
-            labelOutput.setText("Client added");
+            try
+            {
+                httpHelper.doPost(URL, writer.toString(), "application/xml");
+                labelOutput.setText("Client added");
+            } catch (IOException e)
+            {
+                labelOutput.setText("Something went wrong.\nContact the administrator");
+            }
         } else
         {
             labelOutput.setText("Fill up all the blank spaces");

@@ -7,7 +7,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+            prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.controllers.MainScreenController">
    <children>
       <TableView fx:id="tableClients" layoutX="55.0" layoutY="51.0" prefHeight="363.0" prefWidth="693.0">
         <columns>
@@ -25,5 +27,10 @@
        <Label layoutX="763.0" layoutY="127.0" text="Last Name:"/>
        <Label layoutX="776.0" layoutY="181.0" text="Address:"/>
        <Button fx:id="buttonAddClient" layoutX="854.0" layoutY="320.0" mnemonicParsing="false" text="Add client"/>
+       <Button fx:id="buttonDeleteClient" layoutX="55.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0"
+               prefWidth="138.0" text="Delete Client"/>
+       <Label fx:id="labelError" layoutX="57.0" layoutY="626.0" prefHeight="17.0" prefWidth="920.0"/>
+       <Button fx:id="buttonEditClient" layoutX="264.0" layoutY="453.0" mnemonicParsing="false" prefHeight="25.0"
+               prefWidth="138.0" text="Edit Client"/>
    </children>
 </AnchorPane>
