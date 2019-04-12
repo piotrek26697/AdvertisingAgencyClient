@@ -24,7 +24,7 @@ public class ScreenEditClientController implements Initializable
     private Button buttonExit;
 
     @FXML
-    private Button buttonAdd;
+    private Button buttonUpdate;
 
     @FXML
     private TextField fieldName;
@@ -42,46 +42,47 @@ public class ScreenEditClientController implements Initializable
 
     private final String URL = Main.URL + "/client";
 
-    private Client client;
+    private Client client = new Client();
 
     public void setClient(Client client)
     {
         this.client = client;
+
+        fieldName.setText(client.getName());
+        fieldAddress.setText(client.getAddress());
+        fieldLastName.setText(client.getLastName());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+
         httpHelper = new HttpHelper();
 
-        buttonAdd.setDisable(true);
+        buttonUpdate.setDisable(true);
 
-        fieldName.setOnKeyTyped(event -> {
-            if (fieldName.getText() != client.getName())
-                buttonAdd.setDisable(false);
+        fieldName.setOnKeyReleased(event -> {
+            if (!fieldName.getText().equals(client.getName()))
+                buttonUpdate.setDisable(false);
             else
-                buttonAdd.setDisable(true);
+                buttonUpdate.setDisable(true);
         });
-        fieldLastName.setOnKeyTyped(event -> {
-            if (fieldLastName.getText() != client.getLastName())
-                buttonAdd.setDisable(false);
+        fieldLastName.setOnKeyReleased(event -> {
+            if (!fieldLastName.getText().equals(client.getLastName()))
+                buttonUpdate.setDisable(false);
             else
-                buttonAdd.setDisable(true);
+                buttonUpdate.setDisable(true);
         });
-        fieldAddress.setOnKeyTyped(event -> {
-            if (fieldAddress.getText() != client.getAddress())
-                buttonAdd.setDisable(false);
+        fieldAddress.setOnKeyReleased(event -> {
+            if (!fieldAddress.getText().equals(client.getAddress()))
+                buttonUpdate.setDisable(false);
             else
-                buttonAdd.setDisable(true);
+                buttonUpdate.setDisable(true);
         });
-
-        fieldName.setText(client.getName());
-        fieldAddress.setText(client.getAddress());
-        fieldLastName.setText(client.getLastName());
 
         buttonExit.setOnAction(event -> close(event));
 
-        buttonAdd.setOnAction(event -> updateClient());
+        buttonUpdate.setOnAction(event -> updateClient());
     }
 
     private void updateClient()
@@ -94,6 +95,8 @@ public class ScreenEditClientController implements Initializable
             StringWriter wr = new StringWriter();
             JAXB.marshal(client, wr);
             httpHelper.doPut(URL, wr.toString(), "application/xml");
+            labelOutput.setText("Client has been updated");
+            buttonUpdate.setDisable(true);
         } catch (IOException e)
         {
             labelOutput.setText("Something went wrong.\nContact the administrator.");

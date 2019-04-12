@@ -16,7 +16,7 @@
         <TextField fx:id="fieldName" layoutX="288.0" layoutY="103.0"/>
         <TextField fx:id="fieldLastName" layoutX="288.0" layoutY="152.0"/>
         <TextField fx:id="fieldAddress" layoutX="288.0" layoutY="198.0"/>
-        <Button fx:id="buttonAdd" layoutX="288.0" layoutY="267.0" mnemonicParsing="false" prefHeight="25.0"
+        <Button fx:id="buttonUpdate" layoutX="288.0" layoutY="267.0" mnemonicParsing="false" prefHeight="25.0"
                 prefWidth="149.0" text="Confirm and upload"/>
         <Label fx:id="labelOutput" layoutX="295.0" layoutY="354.0" prefHeight="36.0" prefWidth="149.0"/>
     </children>
