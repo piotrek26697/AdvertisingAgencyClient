@@ -70,7 +70,6 @@ public class MainScreenController implements Initializable
         buttonEditClient.setOnAction(event -> {
             Client client = tableClients.getSelectionModel().getSelectedItem();
             editClientWindow(client);
-            buttonShowClients.fire();
         });
 
         buttonDeleteClient.setDisable(true);
