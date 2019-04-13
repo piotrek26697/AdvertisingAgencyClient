@@ -73,7 +73,7 @@ public class ScreenAddClientController implements Initializable
             buttonAdd.setDisable(true);
         } catch (IOException e)
         {
-            showInfoMessage("Something went wrong. Contact the administrator");
+            showInfoMessage("Something went wrong. Contact the administrator.");
         }
     }
 

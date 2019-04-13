@@ -177,7 +177,7 @@ public class MainScreenController implements Initializable
             return clients.getClients();
         } catch (IOException e)
         {
-            this.showErrorMessage("Something went wrong. Contact the administrator");
+            this.showErrorMessage("Something went wrong. Contact the administrator.");
             return null;
         }
     }
