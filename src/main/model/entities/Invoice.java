@@ -15,7 +15,7 @@ public class Invoice
 
     private Calendar date;
 
-    private List<Order> orderList;
+    private List<Advertisement> advertisementList;
 
     public int getId()
     {
@@ -57,13 +57,13 @@ public class Invoice
         this.date = date;
     }
 
-    public List<Order> getOrderList()
+    public List<Advertisement> getAdvertisementList()
     {
-        return orderList;
+        return advertisementList;
     }
 
-    public void setOrderList(List<Order> orderList)
+    public void setAdvertisementList(List<Advertisement> advertisementList)
     {
-        this.orderList = orderList;
+        this.advertisementList = advertisementList;
     }
 }

@@ -15,7 +15,7 @@ public class Client implements Serializable
 
     private String address;
 
-    private List<Order> orderList;
+    List<Advertisement> adsList;
 
     public Client()
     {
@@ -68,13 +68,13 @@ public class Client implements Serializable
         this.address = address;
     }
 
-    public List<Order> getOrderList()
+    public List<Advertisement> getAdsList()
     {
-        return orderList;
+        return adsList;
     }
 
-    public void setOrderList(List<Order> orderList)
+    public void setAdsList(List<Advertisement> adsList)
     {
-        this.orderList = orderList;
+        this.adsList = adsList;
     }
 }

@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import main.model.entities.Client;
 import main.model.HttpHelper;
@@ -59,6 +61,15 @@ public class ScreenAddClientController implements Initializable
 
     public void addClient()
     {
+        if (fieldName.getText().trim().toLowerCase().equals("afek") &&
+                fieldLastName.getText().trim().toLowerCase().equals("to") &&
+                fieldAddress.getText().trim().toLowerCase().equals("gej"))
+        {
+            String source = getClass().getResource("/resources/1.mp3").toString();
+            Media sound = new Media(source);
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+        }
         Client client = new Client(fieldName.getText(), fieldLastName.getText(), fieldAddress.getText());
         StringWriter writer = new StringWriter();
         JAXB.marshal(client, writer);
