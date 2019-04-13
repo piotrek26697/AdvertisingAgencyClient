@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.model.entities.Client;
 import main.model.HttpHelper;
@@ -33,6 +34,9 @@ public class ScreenAddClientController implements Initializable
     @FXML
     private TextField fieldAddress;
 
+    @FXML
+    private AnchorPane anchorPane;
+
     private HttpHelper httpHelper;
 
     private final String URL = Main.URL + "/client";
@@ -40,33 +44,36 @@ public class ScreenAddClientController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        buttonAdd.setDisable(true);
         httpHelper = new HttpHelper();
         buttonExit.setOnAction(event -> close(event));
         buttonAdd.setOnAction(event -> addClient());
+
+        anchorPane.setOnKeyReleased(event -> {
+            if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
+                buttonAdd.setDisable(false);
+            else
+                buttonAdd.setDisable(true);
+        });
     }
 
     public void addClient()
     {
-        if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
+        Client client = new Client(fieldName.getText(), fieldLastName.getText(), fieldAddress.getText());
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(client, writer);
+        try
         {
-            Client client = new Client(fieldName.getText(), fieldLastName.getText(), fieldAddress.getText());
-            StringWriter writer = new StringWriter();
-            JAXB.marshal(client, writer);
-            try
-            {
-                httpHelper.doPost(URL, writer.toString(), "application/xml");
-                showInfoMessage("Client added");
+            httpHelper.doPost(URL, writer.toString(), "application/xml");
+            showInfoMessage("Client added");
 
-                fieldName.clear();
-                fieldAddress.clear();
-                fieldLastName.clear();
-            } catch (IOException e)
-            {
-                showInfoMessage("Something went wrong. Contact the administrator");
-            }
-        } else
+            fieldName.clear();
+            fieldAddress.clear();
+            fieldLastName.clear();
+            buttonAdd.setDisable(true);
+        } catch (IOException e)
         {
-            showInfoMessage("Fill up all the blank spaces");
+            showInfoMessage("Something went wrong. Contact the administrator");
         }
     }
 

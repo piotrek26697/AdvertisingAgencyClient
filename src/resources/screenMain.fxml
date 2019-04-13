@@ -13,11 +13,11 @@
    <children>
       <TableView fx:id="tableClients" layoutX="55.0" layoutY="51.0" prefHeight="363.0" prefWidth="693.0">
         <columns>
-          <TableColumn fx:id="columnName" maxWidth="1.7976931348623157E308" prefWidth="128.0" resizable="false" text="Name" />
+            <TableColumn fx:id="columnName" maxWidth="1.7976931348623157E308" prefWidth="128.0" text="Name"/>
             <TableColumn fx:id="columnLastName" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="189.0"
-                         resizable="false" text="Last name"/>
+                         text="Last name"/>
             <TableColumn fx:id="columnAddress" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="375.0"
-                         resizable="false" text="Address"/>
+                         text="Address"/>
         </columns>
       </TableView>
        <Button fx:id="buttonShowClients" layoutX="848.0" layoutY="310.0" mnemonicParsing="false" text="Show clients"/>
