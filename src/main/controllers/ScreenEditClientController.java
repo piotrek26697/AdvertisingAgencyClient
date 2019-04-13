@@ -2,11 +2,10 @@ package main.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.model.Client;
 import main.model.HttpHelper;
@@ -35,14 +34,18 @@ public class ScreenEditClientController implements Initializable
     @FXML
     private TextField fieldAddress;
 
-    @FXML
-    private Label labelOutput;
-
     private HttpHelper httpHelper;
 
     private final String URL = Main.URL + "/client";
 
-    private Client client = new Client();
+    private Client client;
+
+    private MainScreenController controller;
+
+    public void setController(MainScreenController controller)
+    {
+        this.controller = controller;
+    }
 
     public void setClient(Client client)
     {
@@ -62,19 +65,19 @@ public class ScreenEditClientController implements Initializable
         buttonUpdate.setDisable(true);
 
         fieldName.setOnKeyReleased(event -> {
-            if (!fieldName.getText().equals(client.getName()))
+            if (!fieldName.getText().equals(client.getName()) && !fieldName.getText().trim().isEmpty())
                 buttonUpdate.setDisable(false);
             else
                 buttonUpdate.setDisable(true);
         });
         fieldLastName.setOnKeyReleased(event -> {
-            if (!fieldLastName.getText().equals(client.getLastName()))
+            if (!fieldLastName.getText().equals(client.getLastName()) && !fieldLastName.getText().trim().isEmpty())
                 buttonUpdate.setDisable(false);
             else
                 buttonUpdate.setDisable(true);
         });
         fieldAddress.setOnKeyReleased(event -> {
-            if (!fieldAddress.getText().equals(client.getAddress()))
+            if (!fieldAddress.getText().equals(client.getAddress()) && !fieldAddress.getText().trim().isEmpty())
                 buttonUpdate.setDisable(false);
             else
                 buttonUpdate.setDisable(true);
@@ -95,11 +98,14 @@ public class ScreenEditClientController implements Initializable
             StringWriter wr = new StringWriter();
             JAXB.marshal(client, wr);
             httpHelper.doPut(URL, wr.toString(), "application/xml");
-            labelOutput.setText("Client has been updated");
+            this.showInfoMessage("Client has been updated");
             buttonUpdate.setDisable(true);
+
+            this.controller.fireButtonShowClients();
+
         } catch (IOException e)
         {
-            labelOutput.setText("Something went wrong.\nContact the administrator.");
+            this.showInfoMessage("Something went wrong.\nContact the administrator.");
         }
     }
 
@@ -107,5 +113,13 @@ public class ScreenEditClientController implements Initializable
     {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public void showInfoMessage(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message + "\nPress \"Close\" to finish editing clients.", ButtonType.OK, ButtonType.CLOSE);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.CLOSE)
+            this.buttonExit.fire();
     }
 }

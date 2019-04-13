@@ -4,9 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.model.Client;
 import main.model.HttpHelper;
@@ -35,9 +33,6 @@ public class ScreenAddClientController implements Initializable
     @FXML
     private TextField fieldAddress;
 
-    @FXML
-    private Label labelOutput;
-
     private HttpHelper httpHelper;
 
     private final String URL = Main.URL + "/client";
@@ -49,9 +44,6 @@ public class ScreenAddClientController implements Initializable
         buttonExit.setOnAction(event -> close(event));
         buttonAdd.setOnAction(event -> {
             addClient();
-            fieldName.clear();
-            fieldAddress.clear();
-            fieldLastName.clear();
         });
     }
 
@@ -59,21 +51,24 @@ public class ScreenAddClientController implements Initializable
     {
         if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
         {
-            labelOutput.setText("Adding in progress...");
             Client client = new Client(fieldName.getText(), fieldLastName.getText(), fieldAddress.getText());
             StringWriter writer = new StringWriter();
             JAXB.marshal(client, writer);
             try
             {
                 httpHelper.doPost(URL, writer.toString(), "application/xml");
-                labelOutput.setText("Client added");
+                showInfoMessage("Client added");
+
+                fieldName.clear();
+                fieldAddress.clear();
+                fieldLastName.clear();
             } catch (IOException e)
             {
-                labelOutput.setText("Something went wrong.\nContact the administrator");
+                showInfoMessage("Something went wrong. Contact the administrator");
             }
         } else
         {
-            labelOutput.setText("Fill up all the blank spaces");
+            showInfoMessage("Fill up all the blank spaces");
         }
     }
 
@@ -83,4 +78,11 @@ public class ScreenAddClientController implements Initializable
         stage.close();
     }
 
+    public void showInfoMessage(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message + "\nPress \"Close\" to finish adding clients.", ButtonType.OK, ButtonType.CLOSE);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.CLOSE)
+            this.buttonExit.fire();
+    }
 }

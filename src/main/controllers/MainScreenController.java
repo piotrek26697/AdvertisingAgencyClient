@@ -44,6 +44,8 @@ public class MainScreenController implements Initializable
     @FXML
     private Button buttonEditClient;
 
+    @FXML
+    private Button buttonClearFields;
 
     @FXML
     private TextField fieldName;
@@ -54,9 +56,6 @@ public class MainScreenController implements Initializable
     @FXML
     private TextField fieldAddress;
 
-    @FXML
-    private Label labelError;
-
     private HttpHelper httpHelper;
 
     private final String URL = Main.URL + "/client";
@@ -65,6 +64,8 @@ public class MainScreenController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         httpHelper = new HttpHelper();
+
+        buttonClearFields.setOnAction(event -> clearFields());
 
         buttonEditClient.setDisable(true);
         buttonEditClient.setOnAction(event -> {
@@ -75,11 +76,10 @@ public class MainScreenController implements Initializable
         buttonDeleteClient.setDisable(true);
         buttonDeleteClient.setOnAction(event -> {
             deleteClient();
-            buttonShowClients.fire();
         });
 
         buttonShowClients.setOnAction((event) -> {
-            List<Client> clientList = clientsGet();
+            List<Client> clientList = this.clientsGet();
             if (clientList != null)
             {
                 clientsDisplay(clientList);
@@ -102,6 +102,13 @@ public class MainScreenController implements Initializable
         });
     }
 
+    private void clearFields()
+    {
+        fieldAddress.clear();
+        fieldName.clear();
+        fieldLastName.clear();
+    }
+
     private void editClientWindow(Client client)
     {
         try
@@ -112,10 +119,11 @@ public class MainScreenController implements Initializable
 
             ScreenEditClientController controller = loader.getController();
             controller.setClient(client);
+            controller.setController(this);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.setTitle("Edit Client");
+            stage.setTitle("Edit client");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e)
@@ -126,13 +134,19 @@ public class MainScreenController implements Initializable
 
     private void deleteClient()
     {
-        Client client = tableClients.getSelectionModel().getSelectedItem();
-        try
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete selected client?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES)
         {
-            httpHelper.doDelete(URL + "?id=" + client.getId());
-        } catch (IOException e)
-        {
-            labelError.setText("Something went wrong. Contact the administrator");
+            Client client = tableClients.getSelectionModel().getSelectedItem();
+            try
+            {
+                httpHelper.doDelete(URL + "?id=" + client.getId());
+            } catch (IOException e)
+            {
+                this.showErrorMessage("Something went wrong. Contact the administrator.");
+            }
+            this.fireButtonShowClients();
         }
     }
 
@@ -144,7 +158,7 @@ public class MainScreenController implements Initializable
             Parent root = FXMLLoader.load(getClass().getResource("/resources/screenAddClient.fxml"));
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-            stage.setTitle("Add Client");
+            stage.setTitle("Add client");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e)
@@ -164,7 +178,7 @@ public class MainScreenController implements Initializable
             return clients.getClients();
         } catch (IOException e)
         {
-            labelError.setText("Something went wrong. Contact the administrator");
+            this.showErrorMessage("Something went wrong. Contact the administrator");
             return null;
         }
     }
@@ -176,5 +190,16 @@ public class MainScreenController implements Initializable
         columnAddress.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
 
         tableClients.setItems(FXCollections.observableArrayList(clientList));
+    }
+
+    public void fireButtonShowClients()
+    {
+        buttonShowClients.fire();
+    }
+
+    public void showErrorMessage(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.showAndWait();
     }
 }
