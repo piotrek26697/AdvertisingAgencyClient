@@ -101,7 +101,7 @@ public class ScreenEditClientController implements Initializable
             this.showInfoMessage("Client has been updated");
             buttonUpdate.setDisable(true);
 
-            this.controller.fireButtonShowClients();
+            this.controller.showClients();
 
         } catch (IOException e)
         {

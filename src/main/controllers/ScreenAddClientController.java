@@ -42,9 +42,7 @@ public class ScreenAddClientController implements Initializable
     {
         httpHelper = new HttpHelper();
         buttonExit.setOnAction(event -> close(event));
-        buttonAdd.setOnAction(event -> {
-            addClient();
-        });
+        buttonAdd.setOnAction(event -> addClient());
     }
 
     public void addClient()

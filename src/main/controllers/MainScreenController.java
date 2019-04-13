@@ -68,29 +68,14 @@ public class MainScreenController implements Initializable
         buttonClearFields.setOnAction(event -> clearFields());
 
         buttonEditClient.setDisable(true);
-        buttonEditClient.setOnAction(event -> {
-            Client client = tableClients.getSelectionModel().getSelectedItem();
-            editClientWindow(client);
-        });
+        buttonEditClient.setOnAction(event -> editClientWindow());
 
         buttonDeleteClient.setDisable(true);
-        buttonDeleteClient.setOnAction(event -> {
-            deleteClient();
-        });
+        buttonDeleteClient.setOnAction(event -> deleteClient());
 
-        buttonShowClients.setOnAction((event) -> {
-            List<Client> clientList = this.clientsGet();
-            if (clientList != null)
-            {
-                clientsDisplay(clientList);
-                buttonDeleteClient.setDisable(true);
-                buttonEditClient.setDisable(true);
-            }
-        });
+        buttonShowClients.setOnAction((event) -> showClients());
 
-        buttonAddClient.setOnAction((event -> {
-            addingClientWindow();
-        }));
+        buttonAddClient.setOnAction((event -> addingClientWindow()));
 
 //        tableClients.setEditable(false);
         tableClients.setOnMouseClicked(event -> {
@@ -102,6 +87,17 @@ public class MainScreenController implements Initializable
         });
     }
 
+    public void showClients()
+    {
+        List<Client> clientList = this.downloadClientsFromDB();
+        if (clientList != null)
+        {
+            populateTableClients(clientList);
+            buttonDeleteClient.setDisable(true);
+            buttonEditClient.setDisable(true);
+        }
+    }
+
     private void clearFields()
     {
         fieldAddress.clear();
@@ -109,8 +105,9 @@ public class MainScreenController implements Initializable
         fieldLastName.clear();
     }
 
-    private void editClientWindow(Client client)
+    private void editClientWindow()
     {
+        Client client = tableClients.getSelectionModel().getSelectedItem();
         try
         {
             FXMLLoader loader = new FXMLLoader();
@@ -146,7 +143,7 @@ public class MainScreenController implements Initializable
             {
                 this.showErrorMessage("Something went wrong. Contact the administrator.");
             }
-            this.fireButtonShowClients();
+            this.showClients();
         }
     }
 
@@ -167,7 +164,7 @@ public class MainScreenController implements Initializable
         }
     }
 
-    public List<Client> clientsGet()
+    public List<Client> downloadClientsFromDB()
     {
         try
         {
@@ -183,18 +180,13 @@ public class MainScreenController implements Initializable
         }
     }
 
-    public void clientsDisplay(List<Client> clientList)
+    public void populateTableClients(List<Client> clientList)
     {
         columnName.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
         columnLastName.setCellValueFactory(new PropertyValueFactory<Client, String>("lastName"));
         columnAddress.setCellValueFactory(new PropertyValueFactory<Client, String>("address"));
 
         tableClients.setItems(FXCollections.observableArrayList(clientList));
-    }
-
-    public void fireButtonShowClients()
-    {
-        buttonShowClients.fire();
     }
 
     public void showErrorMessage(String message)
