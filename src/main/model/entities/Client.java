@@ -1,7 +1,8 @@
-package main.model;
+package main.model.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.List;
 
 @XmlRootElement
 public class Client implements Serializable
@@ -13,8 +14,8 @@ public class Client implements Serializable
     private String lastName;
 
     private String address;
-    //TODO list of orders
 
+    private List<Order> orderList;
 
     public Client()
     {
@@ -65,5 +66,15 @@ public class Client implements Serializable
     public void setAddress(String address)
     {
         this.address = address;
+    }
+
+    public List<Order> getOrderList()
+    {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList)
+    {
+        this.orderList = orderList;
     }
 }

@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.model.*;
+import main.model.collections.Clients;
+import main.model.entities.Client;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;

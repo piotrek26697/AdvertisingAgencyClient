@@ -1,4 +1,6 @@
-package main.model;
+package main.model.collections;
+
+import main.model.entities.Client;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
