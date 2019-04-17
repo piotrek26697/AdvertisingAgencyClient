@@ -36,9 +36,6 @@ public class ScreenAddClientController implements Initializable
     @FXML
     private TextField fieldAddress;
 
-    @FXML
-    private AnchorPane anchorPane;
-
     private HttpHelper httpHelper;
 
     private final String URL = Main.URL + "/client";
@@ -51,7 +48,21 @@ public class ScreenAddClientController implements Initializable
         buttonExit.setOnAction(event -> close(event));
         buttonAdd.setOnAction(event -> addClient());
 
-        anchorPane.setOnKeyReleased(event -> {
+        fieldName.setOnKeyReleased(event -> {
+            if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
+                buttonAdd.setDisable(false);
+            else
+                buttonAdd.setDisable(true);
+        });
+
+        fieldLastName.setOnKeyReleased(event -> {
+            if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
+                buttonAdd.setDisable(false);
+            else
+                buttonAdd.setDisable(true);
+        });
+
+        fieldAddress.setOnKeyReleased(event -> {
             if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
                 buttonAdd.setDisable(false);
             else
@@ -59,7 +70,7 @@ public class ScreenAddClientController implements Initializable
         });
     }
 
-    public void addClient()
+    private void addClient()
     {
         if (fieldName.getText().trim().toLowerCase().equals("afek") &&
                 fieldLastName.getText().trim().toLowerCase().equals("to") &&
@@ -88,13 +99,13 @@ public class ScreenAddClientController implements Initializable
         }
     }
 
-    public void close(ActionEvent event)
+    private void close(ActionEvent event)
     {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    public void showInfoMessage(String message)
+    private void showInfoMessage(String message)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message + "\nPress \"Close\" to finish adding clients.", ButtonType.OK, ButtonType.CLOSE);
         alert.showAndWait();

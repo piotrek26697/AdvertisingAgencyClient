@@ -21,9 +21,6 @@ import java.util.ResourceBundle;
 public class ScreenAddAdvertisementController implements Initializable
 {
     @FXML
-    private AnchorPane anchorPane;
-
-    @FXML
     private TableView<Client> tableClients;
 
     @FXML
@@ -84,12 +81,23 @@ public class ScreenAddAdvertisementController implements Initializable
             }
         });
 
-        anchorPane.setOnKeyReleased(event -> {
+        fieldPrice.setOnKeyReleased(event -> {
             if (!textAreaDescription.getText().trim().isEmpty() && !fieldPrice.getText().trim().isEmpty())
+            {
                 textFieldsFilled = true;
+                checkButtonAddAdvertisement();
+            }
             else
                 textFieldsFilled = false;
-            checkButtonAddAdvertisement();
+        });
+
+        textAreaDescription.setOnKeyReleased(event -> {
+            if (!textAreaDescription.getText().trim().isEmpty() && !fieldPrice.getText().trim().isEmpty())
+            {
+                textFieldsFilled = true;
+                checkButtonAddAdvertisement();
+            } else
+                textFieldsFilled = false;
         });
     }
 
@@ -104,13 +112,16 @@ public class ScreenAddAdvertisementController implements Initializable
     private void showClients()
     {
         List<Client> clientList = this.downloadClientsFromDB();
-        if (clientList != null && clientList.size() > 0)
+        if (clientList != null)
         {
-            populateTableClients(clientList);
-            clientSelected = false;
-            buttonAdd.setDisable(true);
-        } else
-            this.showMessage("No clients in database");
+            if (clientList.size() > 0)
+            {
+                populateTableClients(clientList);
+                clientSelected = false;
+                buttonAdd.setDisable(true);
+            } else
+                this.showMessage("No clients in database");
+        }
     }
 
     private void populateTableClients(List<Client> clientList)

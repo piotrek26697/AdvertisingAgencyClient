@@ -127,14 +127,17 @@ public class ScreenClientsController implements Initializable
     public void showClients()
     {
         List<Client> clientList = this.downloadClientsFromDB();
-        if (clientList != null && clientList.size() > 0)
+        if (clientList != null)
         {
-            populateTableClients(clientList);
-            buttonDeleteClient.setDisable(true);
-            buttonEditClient.setDisable(true);
-            buttonShowClientAdvertisements.setDisable(true);
-        } else
-            this.showErrorMessage("No clients in database");
+            if (clientList.size() > 0)
+            {
+                populateTableClients(clientList);
+                buttonDeleteClient.setDisable(true);
+                buttonEditClient.setDisable(true);
+                buttonShowClientAdvertisements.setDisable(true);
+            } else
+                this.showErrorMessage("No clients in database");
+        }
     }
 
     private void clearFields()
