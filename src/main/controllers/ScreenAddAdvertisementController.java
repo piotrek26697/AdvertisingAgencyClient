@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import main.model.HttpHelper;
 import main.model.Main;
 import main.model.collections.Clients;
@@ -120,7 +119,7 @@ public class ScreenAddAdvertisementController implements Initializable
                 clientSelected = false;
                 buttonAdd.setDisable(true);
             } else
-                this.showMessage("No clients in database");
+                this.showMessage("No clients in database.");
         }
     }
 
@@ -166,7 +165,7 @@ public class ScreenAddAdvertisementController implements Initializable
 //        advertisement.setPrice(Double.parseDouble(fieldPrice.getText()));
         } else
         {
-            this.showMessage("Wrong price. Make sure to use dot as a separator");
+            this.showMessage("Wrong price. Make sure to use dot as a separator.");
         }
 
         //TODO finish

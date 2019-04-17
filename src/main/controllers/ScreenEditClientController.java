@@ -97,7 +97,7 @@ public class ScreenEditClientController implements Initializable
             StringWriter wr = new StringWriter();
             JAXB.marshal(client, wr);
             httpHelper.doPut(URL, wr.toString(), "application/xml");
-            this.showInfoMessage("Client has been updated");
+            this.showInfoMessage("Client has been updated.");
             buttonUpdate.setDisable(true);
 
             this.controller.showClients();

@@ -136,7 +136,7 @@ public class ScreenClientsController implements Initializable
                 buttonEditClient.setDisable(true);
                 buttonShowClientAdvertisements.setDisable(true);
             } else
-                this.showErrorMessage("No clients in database");
+                this.showErrorMessage("No clients in database.");
         }
     }
 
