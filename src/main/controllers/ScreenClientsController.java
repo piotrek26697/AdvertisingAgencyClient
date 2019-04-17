@@ -1,9 +1,11 @@
 package main.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,7 +22,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainScreenController implements Initializable
+public class ScreenClientsController implements Initializable
 {
     @FXML
     private TableView<Client> tableClients;
@@ -50,6 +52,12 @@ public class MainScreenController implements Initializable
     private Button buttonClearFields;
 
     @FXML
+    private Button buttonShowClientAdvertisements;
+
+    @FXML
+    private Button buttonMenu;
+
+    @FXML
     private TextField fieldName;
 
     @FXML
@@ -66,6 +74,11 @@ public class MainScreenController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         httpHelper = new HttpHelper();
+
+        buttonMenu.setOnAction(event -> goToMenu(event));
+
+        buttonShowClientAdvertisements.setDisable(true);
+        buttonShowClientAdvertisements.setOnAction(event -> showAdvertisements());
 
         buttonClearFields.setOnAction(event -> clearFields());
 
@@ -85,19 +98,43 @@ public class MainScreenController implements Initializable
             {
                 buttonDeleteClient.setDisable(false);
                 buttonEditClient.setDisable(false);
+                buttonShowClientAdvertisements.setDisable(false);
             }
         });
+    }
+
+    private void goToMenu(ActionEvent event)
+    {
+        try
+        {
+            Parent root = FXMLLoader.load(getClass().getResource("/resources/screenStart.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Managing clients");
+            stage.show();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAdvertisements()
+    {
+
     }
 
     public void showClients()
     {
         List<Client> clientList = this.downloadClientsFromDB();
-        if (clientList != null)
+        if (clientList != null && clientList.size() > 0)
         {
             populateTableClients(clientList);
             buttonDeleteClient.setDisable(true);
             buttonEditClient.setDisable(true);
-        }
+            buttonShowClientAdvertisements.setDisable(true);
+        } else
+            this.showErrorMessage("No clients in database");
     }
 
     private void clearFields()
@@ -150,7 +187,7 @@ public class MainScreenController implements Initializable
     }
 
 
-    public void addingClientWindow()
+    private void addingClientWindow()
     {
         try
         {
@@ -166,7 +203,7 @@ public class MainScreenController implements Initializable
         }
     }
 
-    public List<Client> downloadClientsFromDB()
+    private List<Client> downloadClientsFromDB()
     {
         try
         {
@@ -182,7 +219,7 @@ public class MainScreenController implements Initializable
         }
     }
 
-    public void populateTableClients(List<Client> clientList)
+    private void populateTableClients(List<Client> clientList)
     {
         columnName.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
         columnLastName.setCellValueFactory(new PropertyValueFactory<Client, String>("lastName"));
@@ -191,7 +228,7 @@ public class MainScreenController implements Initializable
         tableClients.setItems(FXCollections.observableArrayList(clientList));
     }
 
-    public void showErrorMessage(String message)
+    private void showErrorMessage(String message)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.showAndWait();

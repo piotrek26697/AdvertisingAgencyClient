@@ -1,7 +1,6 @@
 package main.model.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Calendar;
 import java.util.List;
 
 @XmlRootElement
@@ -9,15 +8,13 @@ public class Advertisement
 {
     private int id;
 
-    private Calendar dateFrom;
-
-    private Calendar dateTo;
+    private String description;
 
     private double price;
 
     private Client client;
 
-    private Invoice invoice;
+    private List<Invoice> invoiceList;
 
     private List<Billboard> billboardList;
 
@@ -29,26 +26,6 @@ public class Advertisement
     public void setId(int id)
     {
         this.id = id;
-    }
-
-    public Calendar getDateFrom()
-    {
-        return dateFrom;
-    }
-
-    public void setDateFrom(Calendar dateFrom)
-    {
-        this.dateFrom = dateFrom;
-    }
-
-    public Calendar getDateTo()
-    {
-        return dateTo;
-    }
-
-    public void setDateTo(Calendar dateTo)
-    {
-        this.dateTo = dateTo;
     }
 
     public double getPrice()
@@ -71,16 +48,6 @@ public class Advertisement
         this.client = client;
     }
 
-    public Invoice getInvoice()
-    {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice)
-    {
-        this.invoice = invoice;
-    }
-
     public List<Billboard> getBillboardList()
     {
         return billboardList;
@@ -89,5 +56,25 @@ public class Advertisement
     public void setBillboardList(List<Billboard> billboardList)
     {
         this.billboardList = billboardList;
+    }
+
+    public List<Invoice> getInvoiceList()
+    {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList)
+    {
+        this.invoiceList = invoiceList;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 }

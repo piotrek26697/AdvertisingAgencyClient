@@ -39,9 +39,9 @@ public class ScreenEditClientController implements Initializable
 
     private Client client;
 
-    private MainScreenController controller;
+    private ScreenClientsController controller;
 
-    public void setController(MainScreenController controller)
+    public void setController(ScreenClientsController controller)
     {
         this.controller = controller;
     }
