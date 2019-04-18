@@ -68,6 +68,8 @@ public class ScreenClientsController implements Initializable
 
     private HttpHelper httpHelper;
 
+    private Client client;
+
     private final String URL = Main.URL + "/client";
 
     @Override
@@ -75,10 +77,10 @@ public class ScreenClientsController implements Initializable
     {
         httpHelper = new HttpHelper();
 
-        buttonMenu.setOnAction(event -> goToMenu(event));
+        buttonMenu.setOnAction(this::goToMenu);
 
         buttonShowClientAdvertisements.setDisable(true);
-        buttonShowClientAdvertisements.setOnAction(event -> showAdvertisements());
+        buttonShowClientAdvertisements.setOnAction(this::showAdvertisements);
 
         buttonClearFields.setOnAction(event -> clearFields());
 
@@ -96,6 +98,7 @@ public class ScreenClientsController implements Initializable
         tableClients.setOnMouseClicked(event -> {
             if (tableClients.getSelectionModel().getSelectedItem() != null)
             {
+                client = tableClients.getSelectionModel().getSelectedItem();
                 buttonDeleteClient.setDisable(false);
                 buttonEditClient.setDisable(false);
                 buttonShowClientAdvertisements.setDisable(false);
@@ -119,9 +122,23 @@ public class ScreenClientsController implements Initializable
         }
     }
 
-    private void showAdvertisements()
+    private void showAdvertisements(ActionEvent event)
     {
-
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/screenAdvertisements.fxml"));
+            Parent root = loader.load();
+            ScreenAdvertisementsController controller = loader.getController();
+            controller.setClient(client);
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Managing clients");
+            stage.show();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void showClients()

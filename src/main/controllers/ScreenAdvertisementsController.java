@@ -68,7 +68,10 @@ public class ScreenAdvertisementsController implements Initializable
     {
         try
         {
-            Parent root = FXMLLoader.load(getClass().getResource("/resources/screenAddAdvertisement.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/screenAddAdvertisement.fxml"));
+            Parent root = loader.load();
+            ScreenAddAdvertisementController controller = loader.getController();
+            controller.setClient(client);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Add advertisement");

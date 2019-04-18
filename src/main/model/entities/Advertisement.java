@@ -1,6 +1,7 @@
 package main.model.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
@@ -17,6 +18,12 @@ public class Advertisement
     private List<Invoice> invoiceList;
 
     private List<Billboard> billboardList;
+
+    public Advertisement()
+    {
+        invoiceList = new ArrayList<>();
+        billboardList = new ArrayList<>();
+    }
 
     public int getId()
     {

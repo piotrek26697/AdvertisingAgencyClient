@@ -1,6 +1,8 @@
 package main.model.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -15,7 +17,13 @@ public class Invoice
 
     private Calendar date;
 
+    @XmlTransient
     private List<Advertisement> advertisementList;
+
+    public Invoice()
+    {
+        advertisementList = new ArrayList<>();
+    }
 
     public int getId()
     {

@@ -69,7 +69,7 @@ public class ScreenAddClientController implements Initializable
         });
     }
 
-    private void addClient()
+    private void addClient()    //TODO
     {
         if (fieldName.getText().trim().toLowerCase().equals("afek") &&
                 fieldLastName.getText().trim().toLowerCase().equals("to") &&

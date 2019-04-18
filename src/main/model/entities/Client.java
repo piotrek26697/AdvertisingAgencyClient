@@ -1,7 +1,9 @@
 package main.model.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
@@ -15,10 +17,11 @@ public class Client implements Serializable
 
     private String address;
 
-    List<Advertisement> adsList;
+    private List<Advertisement> adsList;
 
     public Client()
     {
+        adsList = new ArrayList<>();
     }
 
     public Client(String name, String lastName, String address)
@@ -26,6 +29,7 @@ public class Client implements Serializable
         this.name = name;
         this.lastName = lastName;
         this.address = address;
+        adsList = new ArrayList<>();
     }
 
     public int getId()
@@ -68,6 +72,7 @@ public class Client implements Serializable
         this.address = address;
     }
 
+    @XmlTransient
     public List<Advertisement> getAdsList()
     {
         return adsList;

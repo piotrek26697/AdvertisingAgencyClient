@@ -3,6 +3,7 @@ package main.model.entities;
 import main.model.BillboardSize;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 public class Billboard
@@ -11,6 +12,7 @@ public class Billboard
 
     private String address;
 
+    @XmlTransient
     private Advertisement advertisementDisplayed;
 
     private BillboardSize billboardSize;

@@ -8,11 +8,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import main.model.HttpHelper;
 import main.model.Main;
 import main.model.collections.Clients;
+import main.model.entities.Advertisement;
 import main.model.entities.Client;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -62,6 +64,8 @@ public class ScreenAddAdvertisementController implements Initializable
 
     private boolean textFieldsFilled = false;
 
+    private Client client;
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -85,8 +89,7 @@ public class ScreenAddAdvertisementController implements Initializable
             {
                 textFieldsFilled = true;
                 checkButtonAddAdvertisement();
-            }
-            else
+            } else
                 textFieldsFilled = false;
         });
 
@@ -158,16 +161,42 @@ public class ScreenAddAdvertisementController implements Initializable
     {
         if (fieldPrice.getText().matches("[1-9]+\\d*(\\.?\\d{1,2})?"))
         {
-//        Client client = tableClients.getSelectionModel().getSelectedItem();
-//        Advertisement advertisement = new Advertisement();
-//        advertisement.setDescription(textAreaDescription.getText());
-//        advertisement.setClient(client);
-//        advertisement.setPrice(Double.parseDouble(fieldPrice.getText()));
+            Client client = tableClients.getSelectionModel().getSelectedItem();
+            Advertisement advertisement = new Advertisement();
+            advertisement.setDescription(textAreaDescription.getText());
+            advertisement.setClient(client);
+            advertisement.setPrice(Double.parseDouble(fieldPrice.getText()));
+            advertisement.setInvoiceList(null);
+            advertisement.setBillboardList(null);
+            client.getAdsList().add(advertisement);
+
+            StringWriter sw = new StringWriter();
+            JAXB.marshal(advertisement, sw);
+            try
+            {
+                httpHelper.doPost(URL_AD, sw.toString(), "application/xml");
+
+                JAXB.marshal(client, sw);
+                httpHelper.doPut(URL_CLIENT, sw.toString(), "application/xml");
+            } catch (IOException e)
+            {
+                this.showMessage("Something went wrong. Contact the administrator.");
+            }
         } else
         {
             this.showMessage("Wrong price. Make sure to use dot as a separator.");
         }
+    }
 
-        //TODO finish
+    public void setClient(Client client)
+    {
+        this.client = client;
+        if (client != null)
+        {
+            fieldName.setText(client.getName());
+            fieldLastName.setText(client.getLastName());
+            fieldAddress.setText(client.getAddress());
+            showClients();
+        }
     }
 }
