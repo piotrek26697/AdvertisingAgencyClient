@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.model.HttpHelper;
 import main.model.Main;
+import main.model.collections.Advertisements;
 import main.model.collections.Clients;
 import main.model.entities.Advertisement;
 import main.model.entities.Client;
@@ -52,6 +53,9 @@ public class ScreenAddAdvertisementController implements Initializable
     private TextField fieldPrice;
 
     @FXML
+    private TextField fieldTitle;
+
+    @FXML
     private Button buttonAdd;
 
     private HttpHelper httpHelper;
@@ -65,6 +69,8 @@ public class ScreenAddAdvertisementController implements Initializable
     private boolean textFieldsFilled = false;
 
     private Client client;
+
+    private ScreenAdvertisementsController advertisementsController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -85,7 +91,7 @@ public class ScreenAddAdvertisementController implements Initializable
         });
 
         fieldPrice.setOnKeyReleased(event -> {
-            if (!textAreaDescription.getText().trim().isEmpty() && !fieldPrice.getText().trim().isEmpty())
+            if (!fieldTitle.getText().trim().isEmpty() && !fieldPrice.getText().trim().isEmpty())
             {
                 textFieldsFilled = true;
                 checkButtonAddAdvertisement();
@@ -93,8 +99,8 @@ public class ScreenAddAdvertisementController implements Initializable
                 textFieldsFilled = false;
         });
 
-        textAreaDescription.setOnKeyReleased(event -> {
-            if (!textAreaDescription.getText().trim().isEmpty() && !fieldPrice.getText().trim().isEmpty())
+        fieldTitle.setOnKeyReleased(event -> {
+            if (!fieldTitle.getText().trim().isEmpty() && !fieldPrice.getText().trim().isEmpty())
             {
                 textFieldsFilled = true;
                 checkButtonAddAdvertisement();
@@ -159,25 +165,25 @@ public class ScreenAddAdvertisementController implements Initializable
 
     private void addAdvertisement()
     {
-        if (fieldPrice.getText().matches("[1-9]+\\d*(\\.?\\d{1,2})?"))
+        if (fieldPrice.getText().matches("[1-9]+\\d*(\\.?\\d{1,2})?|0"))
         {
             Client client = tableClients.getSelectionModel().getSelectedItem();
             Advertisement advertisement = new Advertisement();
-            advertisement.setDescription(textAreaDescription.getText());
+            advertisement.setName(fieldTitle.getText().trim());
+            advertisement.setDescription(textAreaDescription.getText().trim());
             advertisement.setClient(client);
             advertisement.setPrice(Double.parseDouble(fieldPrice.getText()));
             advertisement.setInvoiceList(null);
             advertisement.setBillboardList(null);
-            client.getAdsList().add(advertisement);
-
-            StringWriter sw = new StringWriter();
-            JAXB.marshal(advertisement, sw);
             try
             {
-                httpHelper.doPost(URL_AD, sw.toString(), "application/xml");
+                StringWriter sw = new StringWriter();
+                JAXB.marshal(advertisement, sw);
+                httpHelper.doPost(URL_AD, sw.toString(), "application/xml");    //saving add
 
-                JAXB.marshal(client, sw);
-                httpHelper.doPut(URL_CLIENT, sw.toString(), "application/xml");
+                showMessage("Advertisement has been added.");
+                this.clearFields();
+                this.advertisementsController.showAdvertisements();
             } catch (IOException e)
             {
                 this.showMessage("Something went wrong. Contact the administrator.");
@@ -186,6 +192,12 @@ public class ScreenAddAdvertisementController implements Initializable
         {
             this.showMessage("Wrong price. Make sure to use dot as a separator.");
         }
+    }
+
+    private void clearFields()
+    {
+        textAreaDescription.clear();
+        fieldPrice.clear();
     }
 
     public void setClient(Client client)
@@ -198,5 +210,10 @@ public class ScreenAddAdvertisementController implements Initializable
             fieldAddress.setText(client.getAddress());
             showClients();
         }
+    }
+
+    public void setAdvertisementsController(ScreenAdvertisementsController controller)
+    {
+        this.advertisementsController = controller;
     }
 }

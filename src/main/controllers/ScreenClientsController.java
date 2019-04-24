@@ -149,12 +149,14 @@ public class ScreenClientsController implements Initializable
             if (clientList.size() > 0)
             {
                 populateTableClients(clientList);
-                buttonDeleteClient.setDisable(true);
-                buttonEditClient.setDisable(true);
-                buttonShowClientAdvertisements.setDisable(true);
             } else
                 this.showErrorMessage("No clients in database.");
-        }
+        } else
+            tableClients.getItems().clear();
+
+        buttonDeleteClient.setDisable(true);
+        buttonEditClient.setDisable(true);
+        buttonShowClientAdvertisements.setDisable(true);
     }
 
     private void clearFields()
@@ -227,7 +229,7 @@ public class ScreenClientsController implements Initializable
     {
         try
         {
-            String params = "?name=" + fieldName.getText() + "&lastName=" + fieldLastName.getText() + "&address=" + fieldAddress.getText();
+            String params = "?name=" + fieldName.getText().trim() + "&lastName=" + fieldLastName.getText().trim() + "&address=" + fieldAddress.getText().trim();
             String url = URL + params;
             String result = httpHelper.doGet(url);
             Clients clients = JAXB.unmarshal(new StringReader(result), Clients.class);

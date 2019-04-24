@@ -82,16 +82,16 @@ public class ScreenEditClientController implements Initializable
                 buttonUpdate.setDisable(true);
         });
 
-        buttonExit.setOnAction(event -> close(event));
+        buttonExit.setOnAction(this::close);
 
         buttonUpdate.setOnAction(event -> updateClient());
     }
 
     private void updateClient()
     {
-        client.setAddress(fieldAddress.getText());
-        client.setName(fieldName.getText());
-        client.setLastName(fieldLastName.getText());
+        client.setAddress(fieldAddress.getText().trim());
+        client.setName(fieldName.getText().trim());
+        client.setLastName(fieldLastName.getText().trim());
         try
         {
             StringWriter wr = new StringWriter();

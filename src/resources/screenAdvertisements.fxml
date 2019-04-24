@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -12,23 +13,30 @@
     <children>
         <TableView fx:id="tableAdvertisements" layoutX="61.0" layoutY="135.0" prefHeight="341.0" prefWidth="598.0">
             <columns>
-                <TableColumn fx:id="columnDescription" prefWidth="227.0" text="Name / Description"/>
-                <TableColumn fx:id="columnDate" minWidth="0.0" prefWidth="183.0" text="Displayed">
-                    <columns>
-                        <TableColumn fx:id="columnDateFrom" prefWidth="130.0" text="From"/>
-                        <TableColumn fx:id="columnDateTo" prefWidth="130.0" text="To"/>
-                    </columns>
-                </TableColumn>
-                <TableColumn fx:id="columnPrice" prefWidth="110.0" text="Price"/>
+                <TableColumn fx:id="columnTitle" prefWidth="161.0" text="Name"/>
+                <TableColumn fx:id="columnDescription" prefWidth="318.0" text="Description"/>
+                <TableColumn fx:id="columnPrice" minWidth="0.0" prefWidth="118.0" text="Price"/>
             </columns>
         </TableView>
         <Button fx:id="buttonMenu" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Menu"/>
-        <Label fx:id="labelTitle" layoutX="61.0" layoutY="58.0" prefHeight="54.0" prefWidth="129.0">
+        <Label fx:id="labelTitle" layoutX="61.0" layoutY="58.0" prefHeight="54.0" prefWidth="598.0">
             <font>
                 <Font size="32.0"/>
             </font>
         </Label>
-        <Button fx:id="buttonAddAdvertisement" layoutX="779.0" layoutY="416.0" mnemonicParsing="false"
-                text="Add advertisement"/>
+        <Button fx:id="buttonAddAdvertisement" layoutX="773.0" layoutY="354.0" mnemonicParsing="false" prefHeight="25.0"
+                prefWidth="129.0" text="Add advertisement"/>
+        <Button fx:id="buttonDeleteAdvertisement" layoutX="774.0" layoutY="406.0" mnemonicParsing="false"
+                text="Delete advertisement"/>
+        <Button fx:id="buttonEditAdvertisement" layoutX="774.0" layoutY="459.0" mnemonicParsing="false"
+                prefHeight="25.0" prefWidth="129.0" text="Edit advertisement"/>
+        <TextField fx:id="fieldTitle" layoutX="774.0" layoutY="135.0"/>
+        <TextField fx:id="fieldPriceFrom" layoutX="774.0" layoutY="185.0"/>
+        <TextField fx:id="fieldPriceTo" layoutX="774.0" layoutY="238.0"/>
+        <Label layoutX="716.0" layoutY="139.0" text="Name:"/>
+        <Label layoutX="694.0" layoutY="189.0" text="Price from:"/>
+        <Label layoutX="712.0" layoutY="242.0" text="Price to:"/>
+        <Button fx:id="buttonFilter" layoutX="773.0" layoutY="281.0" mnemonicParsing="false" prefHeight="25.0"
+                prefWidth="129.0" text="Filter"/>
     </children>
 </AnchorPane>

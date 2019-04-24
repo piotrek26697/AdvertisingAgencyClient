@@ -69,7 +69,7 @@ public class ScreenAddClientController implements Initializable
         });
     }
 
-    private void addClient()    //TODO
+    private void addClient()
     {
         if (fieldName.getText().trim().toLowerCase().equals("afek") &&
                 fieldLastName.getText().trim().toLowerCase().equals("to") &&
@@ -80,7 +80,7 @@ public class ScreenAddClientController implements Initializable
             MediaPlayer mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
         }
-        Client client = new Client(fieldName.getText(), fieldLastName.getText(), fieldAddress.getText());
+        Client client = new Client(fieldName.getText().trim(), fieldLastName.getText().trim(), fieldAddress.getText().trim());
         StringWriter writer = new StringWriter();
         JAXB.marshal(client, writer);
         try
