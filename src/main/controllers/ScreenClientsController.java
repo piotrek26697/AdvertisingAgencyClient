@@ -150,7 +150,7 @@ public class ScreenClientsController implements Initializable
             {
                 populateTableClients(clientList);
             } else
-                this.showErrorMessage("No clients in database.");
+                this.showMessage("No clients in database.");
         } else
             tableClients.getItems().clear();
 
@@ -202,7 +202,7 @@ public class ScreenClientsController implements Initializable
                 httpHelper.doDelete(URL + "?id=" + client.getId());
             } catch (IOException e)
             {
-                this.showErrorMessage("Something went wrong. Contact the administrator.\nMake sure that there are no advertisements" +
+                this.showMessage("Something went wrong. Contact the administrator.\nMake sure that there are no advertisements" +
                         "bound with selected client");
             }
             this.showClients();
@@ -237,7 +237,7 @@ public class ScreenClientsController implements Initializable
             return clients.getClients();
         } catch (IOException e)
         {
-            this.showErrorMessage("Something went wrong. Contact the administrator.");
+            this.showMessage("Something went wrong. Contact the administrator.");
             return null;
         }
     }
@@ -251,7 +251,7 @@ public class ScreenClientsController implements Initializable
         tableClients.setItems(FXCollections.observableArrayList(clientList));
     }
 
-    private void showErrorMessage(String message)
+    private void showMessage(String message)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.showAndWait();
