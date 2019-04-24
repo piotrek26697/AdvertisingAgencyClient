@@ -3,7 +3,9 @@ package main.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import main.model.HttpHelper;
 import main.model.Main;
 import main.model.entities.Advertisement;
@@ -82,6 +84,7 @@ public class ScreenEditAdvertisementController implements Initializable
                 buttonUpdate.setDisable(true);
                 showMessage("Advertisement updated successfully.");
                 controller.showAdvertisements();
+                this.closeWindow(actionEvent);
             } catch (IOException e)
             {
                 e.printStackTrace();
@@ -110,5 +113,11 @@ public class ScreenEditAdvertisementController implements Initializable
         fieldDescription.setText(advertisement.getDescription());
         fieldPrice.setText(Double.toString(advertisement.getPrice()));
         fieldTitle.setText(advertisement.getName());
+    }
+
+    private void closeWindow(ActionEvent event)
+    {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

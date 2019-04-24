@@ -108,13 +108,13 @@ public class ScreenEditClientController implements Initializable
         }
     }
 
-    public void close(ActionEvent event)
+    private void close(ActionEvent event)
     {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    public void showInfoMessage(String message)
+    private void showInfoMessage(String message)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message + "\nPress \"Close\" to finish editing clients.", ButtonType.OK, ButtonType.CLOSE);
         alert.showAndWait();

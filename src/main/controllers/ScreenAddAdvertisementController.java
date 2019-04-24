@@ -165,7 +165,7 @@ public class ScreenAddAdvertisementController implements Initializable
 
     private void addAdvertisement()
     {
-        if (fieldPrice.getText().matches("[1-9]+\\d*(\\.?\\d{1,2})?|0"))
+        if (fieldPrice.getText().matches("[1-9]+\\d*(\\.?\\d{1,2})?|0|0\\.[1-9]{1,2}"))
         {
             Client client = tableClients.getSelectionModel().getSelectedItem();
             Advertisement advertisement = new Advertisement();
