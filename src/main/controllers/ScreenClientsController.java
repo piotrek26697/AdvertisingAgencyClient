@@ -114,7 +114,7 @@ public class ScreenClientsController implements Initializable
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Managing clients");
+            stage.setTitle("Advertising agency");
             stage.show();
         } catch (IOException e)
         {
@@ -133,7 +133,7 @@ public class ScreenClientsController implements Initializable
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Managing clients");
+            stage.setTitle("Managing advertisements");
             stage.show();
         } catch (IOException e)
         {
@@ -202,7 +202,8 @@ public class ScreenClientsController implements Initializable
                 httpHelper.doDelete(URL + "?id=" + client.getId());
             } catch (IOException e)
             {
-                this.showErrorMessage("Something went wrong. Contact the administrator.");
+                this.showErrorMessage("Something went wrong. Contact the administrator.\nMake sure that there are no advertisements" +
+                        "bound with selected client");
             }
             this.showClients();
         }
@@ -252,7 +253,7 @@ public class ScreenClientsController implements Initializable
 
     private void showErrorMessage(String message)
     {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.showAndWait();
     }
 }

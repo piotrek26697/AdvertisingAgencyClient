@@ -122,15 +122,20 @@ public class ScreenAdvertisementsController implements Initializable
 
     private void deleteAdvertisement(ActionEvent actionEvent)
     {
-        try
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete selected advertisement?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES)
         {
-            Advertisement ad = tableAdvertisements.getSelectionModel().getSelectedItem();
-            httpHelper.doDelete(URL_ADVERTISEMENT + "?advertisementID=" + ad.getId());
-            showAdvertisements();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-            this.showMessage("Something went wrong. Contact the administrator.");
+            try
+            {
+                Advertisement ad = tableAdvertisements.getSelectionModel().getSelectedItem();
+                httpHelper.doDelete(URL_ADVERTISEMENT + "?advertisementID=" + ad.getId());
+                showAdvertisements();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                this.showMessage("Something went wrong. Contact the administrator.");
+            }
         }
     }
 

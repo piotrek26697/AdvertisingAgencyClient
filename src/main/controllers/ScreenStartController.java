@@ -74,7 +74,7 @@ public class ScreenStartController implements Initializable
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Managing clients");
+            stage.setTitle("Managing advertisements");
             stage.show();
         } catch (IOException e)
         {

@@ -68,7 +68,7 @@ public class ScreenEditAdvertisementController implements Initializable
 
     private void updateAdvertisement(ActionEvent actionEvent)
     {
-        if (fieldPrice.getText().matches("[1-9]+\\d*(\\.?\\d{1,2})?|0"))
+        if (fieldPrice.getText().matches("[1-9]+\\d*(\\.?\\d{1,2})?|0|0\\.[0-9]{1,2}"))
         {
             advertisement.setName(fieldTitle.getText().trim());
             advertisement.setPrice(Double.parseDouble(fieldPrice.getText().trim()));

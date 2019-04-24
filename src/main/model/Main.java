@@ -18,7 +18,7 @@ public class Main extends Application
     {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/screenStart.fxml"));
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Advertising Agency");
+        primaryStage.setTitle("Advertising agency");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
