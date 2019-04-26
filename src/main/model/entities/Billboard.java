@@ -4,6 +4,8 @@ import main.model.BillboardSize;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement
 public class Billboard
@@ -12,10 +14,14 @@ public class Billboard
 
     private String address;
 
-    @XmlTransient
-    private Advertisement advertisementDisplayed;
+    private List<BillboardOccupation> billboardOccupationList;
 
     private BillboardSize billboardSize;
+
+    public Billboard()
+    {
+        billboardOccupationList = new ArrayList<>();
+    }
 
     public int getId()
     {
@@ -37,14 +43,15 @@ public class Billboard
         this.address = address;
     }
 
-    public Advertisement getAdvertisementDisplayed()
+    @XmlTransient
+    public List<BillboardOccupation> getBillboardOccupationList()
     {
-        return advertisementDisplayed;
+        return billboardOccupationList;
     }
 
-    public void setAdvertisementDisplayed(Advertisement advertisementDisplayed)
+    public void setBillboardOccupationList(List<BillboardOccupation> billboardOccupationList)
     {
-        this.advertisementDisplayed = advertisementDisplayed;
+        this.billboardOccupationList = billboardOccupationList;
     }
 
     public BillboardSize getBillboardSize()

@@ -80,7 +80,7 @@ public class ScreenClientsController implements Initializable
         buttonMenu.setOnAction(this::goToMenu);
 
         buttonShowClientAdvertisements.setDisable(true);
-        buttonShowClientAdvertisements.setOnAction(this::showAdvertisements);
+        buttonShowClientAdvertisements.setOnAction(this::showAdvertisementsWindow);
 
         buttonClearFields.setOnAction(event -> clearFields());
 
@@ -122,7 +122,7 @@ public class ScreenClientsController implements Initializable
         }
     }
 
-    private void showAdvertisements(ActionEvent event)
+    private void showAdvertisementsWindow(ActionEvent event)
     {
         try
         {
@@ -141,7 +141,7 @@ public class ScreenClientsController implements Initializable
         }
     }
 
-    public void showClients()
+    void showClients()
     {
         List<Client> clientList = this.downloadClientsFromDB();
         if (clientList != null)

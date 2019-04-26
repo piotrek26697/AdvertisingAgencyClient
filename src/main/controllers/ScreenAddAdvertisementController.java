@@ -173,8 +173,6 @@ public class ScreenAddAdvertisementController implements Initializable
             advertisement.setDescription(textAreaDescription.getText().trim());
             advertisement.setClient(client);
             advertisement.setPrice(Double.parseDouble(fieldPrice.getText()));
-            advertisement.setInvoiceList(null);
-            advertisement.setBillboardList(null);
             try
             {
                 StringWriter sw = new StringWriter();

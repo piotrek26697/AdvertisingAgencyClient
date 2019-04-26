@@ -31,13 +31,13 @@ public class ScreenStartController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        buttonLoadAdvertisementsView.setOnAction(event -> loadAdvertisementsView(event));
+        buttonLoadAdvertisementsView.setOnAction(this::loadAdvertisementsView);
 
-        buttonLoadBillboardsView.setOnAction(event -> loadBillboardsView(event));
+        buttonLoadBillboardsView.setOnAction(this::loadBillboardsView);
 
-        buttonLoadClientsView.setOnAction(event -> loadClientsView(event));
+        buttonLoadClientsView.setOnAction(this::loadClientsView);
 
-        buttonLoadInvoicesView.setOnAction(event -> loadInvoicesView(event));
+        buttonLoadInvoicesView.setOnAction(this::loadInvoicesView);
     }
 
     private void loadInvoicesView(ActionEvent event)
@@ -63,7 +63,18 @@ public class ScreenStartController implements Initializable
 
     private void loadBillboardsView(ActionEvent event)
     {
-
+        try
+        {
+            Parent root = FXMLLoader.load(getClass().getResource("/resources/screenBillboards.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Managing billboards");
+            stage.show();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void loadAdvertisementsView(ActionEvent event)

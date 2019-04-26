@@ -19,12 +19,12 @@ public class Advertisement
 
     private List<Invoice> invoiceList;
 
-    private List<Billboard> billboardList;
+    private List<BillboardOccupation> billboardOccupationList;
 
     public Advertisement()
     {
         invoiceList = new ArrayList<>();
-        billboardList = new ArrayList<>();
+        billboardOccupationList = new ArrayList<>();
     }
 
     public String getName()
@@ -67,14 +67,14 @@ public class Advertisement
         this.client = client;
     }
 
-    public List<Billboard> getBillboardList()
+    public List<BillboardOccupation> getBillboardOccupationList()
     {
-        return billboardList;
+        return billboardOccupationList;
     }
 
-    public void setBillboardList(List<Billboard> billboardList)
+    public void setBillboardOccupationList(List<BillboardOccupation> billboardOccupationList)
     {
-        this.billboardList = billboardList;
+        this.billboardOccupationList = billboardOccupationList;
     }
 
     public List<Invoice> getInvoiceList()

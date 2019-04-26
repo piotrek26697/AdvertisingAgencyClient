@@ -47,26 +47,19 @@ public class ScreenAddClientController implements Initializable
         buttonExit.setOnAction(event -> close(event));
         buttonAdd.setOnAction(event -> addClient());
 
-        fieldName.setOnKeyReleased(event -> {
-            if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
-                buttonAdd.setDisable(false);
-            else
-                buttonAdd.setDisable(true);
-        });
+        fieldName.setOnKeyReleased(event -> buttonAddActivation());
 
-        fieldLastName.setOnKeyReleased(event -> {
-            if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
-                buttonAdd.setDisable(false);
-            else
-                buttonAdd.setDisable(true);
-        });
+        fieldLastName.setOnKeyReleased(event -> buttonAddActivation());
 
-        fieldAddress.setOnKeyReleased(event -> {
-            if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
-                buttonAdd.setDisable(false);
-            else
-                buttonAdd.setDisable(true);
-        });
+        fieldAddress.setOnKeyReleased(event -> buttonAddActivation());
+    }
+
+    private void buttonAddActivation()
+    {
+        if (!fieldName.getText().trim().isEmpty() && !fieldLastName.getText().trim().isEmpty() && !fieldAddress.getText().trim().isEmpty())
+            buttonAdd.setDisable(false);
+        else
+            buttonAdd.setDisable(true);
     }
 
     private void addClient()
