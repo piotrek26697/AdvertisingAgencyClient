@@ -9,7 +9,8 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ScreenAdvertisementsController">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.controllers.advertisementControllers.ScreenAdvertisementsController">
     <children>
         <TableView fx:id="tableAdvertisements" layoutX="61.0" layoutY="135.0" prefHeight="341.0" prefWidth="598.0">
             <columns>
@@ -38,5 +39,9 @@
         <Label layoutX="712.0" layoutY="242.0" text="Price to:"/>
         <Button fx:id="buttonFilter" layoutX="773.0" layoutY="281.0" mnemonicParsing="false" prefHeight="25.0"
                 prefWidth="129.0" text="Filter"/>
+        <Button fx:id="buttonScheduleDisplay" layoutX="773.0" layoutY="513.0" mnemonicParsing="false" prefHeight="25.0"
+                prefWidth="129.0" text="Schedule display"/>
+        <Button fx:id="buttonScheduleDetails" layoutX="774.0" layoutY="562.0" mnemonicParsing="false" prefHeight="25.0"
+                prefWidth="129.0" text="Show display details"/>
     </children>
 </AnchorPane>

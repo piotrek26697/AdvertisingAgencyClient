@@ -1,4 +1,4 @@
-package main.controllers;
+package main.controllers.advertisementControllers;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.controllers.scheduleDisplayControllers.ScreenScheduleDisplayController;
+import main.controllers.scheduleDisplayControllers.ScreenSetScheduleDisplayController;
 import main.model.HttpHelper;
 import main.model.Main;
 import main.model.collections.Advertisements;
@@ -57,6 +59,12 @@ public class ScreenAdvertisementsController implements Initializable
     private Button buttonFilter;
 
     @FXML
+    private Button buttonScheduleDisplay;
+
+    @FXML
+    private Button buttonScheduleDetails;
+
+    @FXML
     private TextField fieldTitle;
 
     @FXML
@@ -89,6 +97,11 @@ public class ScreenAdvertisementsController implements Initializable
         buttonDeleteAdvertisement.setDisable(true);
         buttonDeleteAdvertisement.setOnAction(this::deleteAdvertisement);
         buttonEditAdvertisement.setDisable(true);
+        buttonScheduleDisplay.setDisable(true);
+        buttonScheduleDisplay.setOnAction(this::scheduleDisplayWindow);
+
+        buttonScheduleDetails.setDisable(true);
+        buttonScheduleDetails.setOnAction(this::scheduleDetailsWindow);
 
         tableAdvertisements.setOnMouseClicked(event ->
         {
@@ -96,8 +109,51 @@ public class ScreenAdvertisementsController implements Initializable
             {
                 buttonDeleteAdvertisement.setDisable(false);
                 buttonEditAdvertisement.setDisable(false);
+                buttonScheduleDisplay.setDisable(false);
+                buttonScheduleDetails.setDisable(false);
             }
         });
+    }
+
+    private void scheduleDetailsWindow(ActionEvent event)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screenScheduleDisplay.fxml"));
+        try
+        {
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            ScreenScheduleDisplayController controller = loader.getController();
+            stage.setScene(scene);
+            stage.setTitle("Schedule for ad");
+            stage.show();
+            controller.setAdvertisement(tableAdvertisements.getSelectionModel().getSelectedItem());
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void scheduleDisplayWindow(ActionEvent event)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screenSetScheduleDisplay.fxml"));
+        try
+        {
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            ScreenSetScheduleDisplayController controller = loader.getController();
+            controller.setAdvertisement(tableAdvertisements.getSelectionModel().getSelectedItem());
+
+            stage.setScene(scene);
+            stage.setTitle("Managing schedule");
+            stage.show();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void editAdvertisementWindow(ActionEvent actionEvent)
@@ -129,7 +185,9 @@ public class ScreenAdvertisementsController implements Initializable
             try
             {
                 Advertisement ad = tableAdvertisements.getSelectionModel().getSelectedItem();
-                httpHelper.doDelete(URL_ADVERTISEMENT + "?advertisementID=" + ad.getId());
+                String response = httpHelper.doDelete(URL_ADVERTISEMENT + "?advertisementID=" + ad.getId());
+                if (response.equals("-1"))
+                    showMessage("There are some scheduled displays for this ad");
                 showAdvertisements();
             } catch (IOException e)
             {
@@ -141,6 +199,7 @@ public class ScreenAdvertisementsController implements Initializable
 
     public void showAdvertisements()
     {
+        tableAdvertisements.getItems().clear();
         int id = client.getId();
         List<Advertisement> adsList = downloadAdvertisementsDB(id);
         if (adsList != null)
@@ -150,11 +209,11 @@ public class ScreenAdvertisementsController implements Initializable
                 populateAdsTable(adsList);
             } else
                 showMessage("No ads to display");
-        } else
-            tableAdvertisements.getItems().clear();
-
+        }
         buttonDeleteAdvertisement.setDisable(true);
         buttonEditAdvertisement.setDisable(true);
+        buttonScheduleDisplay.setDisable(true);
+        buttonScheduleDetails.setDisable(true);
     }
 
     private void populateAdsTable(List<Advertisement> adsList)

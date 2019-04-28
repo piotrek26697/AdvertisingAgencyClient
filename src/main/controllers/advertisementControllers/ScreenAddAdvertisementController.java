@@ -1,4 +1,4 @@
-package main.controllers;
+package main.controllers.advertisementControllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.model.HttpHelper;
 import main.model.Main;
-import main.model.collections.Advertisements;
 import main.model.collections.Clients;
 import main.model.entities.Advertisement;
 import main.model.entities.Client;
@@ -194,6 +193,7 @@ public class ScreenAddAdvertisementController implements Initializable
 
     private void clearFields()
     {
+        fieldTitle.clear();
         textAreaDescription.clear();
         fieldPrice.clear();
     }

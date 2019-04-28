@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="420.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.controllers.scheduleDisplayControllers.ScreenScheduleDisplayController">
+    <children>
+        <TableView fx:id="table" layoutX="54.0" layoutY="62.0" prefHeight="210.0" prefWidth="633.0">
+            <columns>
+                <TableColumn fx:id="columnName" prefWidth="150.0" text="Advertisement name"/>
+                <TableColumn fx:id="columnAddress" minWidth="0.0" prefWidth="222.0" text="Billboard Address"/>
+                <TableColumn fx:id="columnDateFrom" prefWidth="121.0" text="Date from"/>
+                <TableColumn fx:id="columnDateTo" prefWidth="139.0" text="Date to"/>
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

@@ -31,12 +31,14 @@ public class ScreenStartController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        buttonLoadAdvertisementsView.setDisable(true);
         buttonLoadAdvertisementsView.setOnAction(this::loadAdvertisementsView);
 
         buttonLoadBillboardsView.setOnAction(this::loadBillboardsView);
 
         buttonLoadClientsView.setOnAction(this::loadClientsView);
 
+        buttonLoadInvoicesView.setDisable(true);
         buttonLoadInvoicesView.setOnAction(this::loadInvoicesView);
     }
 

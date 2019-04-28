@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
             prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="main.controllers.ScreenClientsController">
+            fx:controller="main.controllers.clientControllers.ScreenClientsController">
    <children>
        <TableView fx:id="tableClients" layoutX="56.0" layoutY="104.0" prefHeight="363.0" prefWidth="693.0">
         <columns>

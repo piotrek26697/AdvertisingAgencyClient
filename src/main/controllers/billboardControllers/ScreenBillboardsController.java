@@ -1,4 +1,4 @@
-package main.controllers;
+package main.controllers.billboardControllers;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -103,6 +103,7 @@ public class ScreenBillboardsController implements Initializable
 
     private void showBillboards()
     {
+        tableBillboards.getItems().clear();
         List<Billboard> list = downloadBillboardListFromDB();
         if (list != null)
         {
@@ -111,9 +112,7 @@ public class ScreenBillboardsController implements Initializable
                 populateTableBillboards(list);
             } else
                 showMessage("There are no billboards in database.");
-        } else
-            tableBillboards.getItems().clear();
-
+        }
         buttonDetails.setDisable(true);
     }
 

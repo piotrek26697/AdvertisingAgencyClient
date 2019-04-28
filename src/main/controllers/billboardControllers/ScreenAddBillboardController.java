@@ -1,4 +1,4 @@
-package main.controllers;
+package main.controllers.billboardControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

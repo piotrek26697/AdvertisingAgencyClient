@@ -2,18 +2,22 @@ package main.model.entities;
 
 import main.model.BillboardSize;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Billboard
 {
     private int id;
 
     private String address;
 
+    @XmlTransient
     private List<BillboardOccupation> billboardOccupationList;
 
     private BillboardSize billboardSize;
@@ -43,7 +47,6 @@ public class Billboard
         this.address = address;
     }
 
-    @XmlTransient
     public List<BillboardOccupation> getBillboardOccupationList()
     {
         return billboardOccupationList;

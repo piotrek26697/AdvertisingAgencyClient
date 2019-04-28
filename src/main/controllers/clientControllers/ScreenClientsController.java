@@ -1,4 +1,4 @@
-package main.controllers;
+package main.controllers.clientControllers;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.controllers.advertisementControllers.ScreenAdvertisementsController;
 import main.model.*;
 import main.model.collections.Clients;
 import main.model.entities.Client;
@@ -129,20 +130,21 @@ public class ScreenClientsController implements Initializable
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/screenAdvertisements.fxml"));
             Parent root = loader.load();
             ScreenAdvertisementsController controller = loader.getController();
-            controller.setClient(client);
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Managing advertisements");
             stage.show();
+            controller.setClient(client);
         } catch (IOException e)
         {
             e.printStackTrace();
         }
     }
 
-    void showClients()
+    public void showClients()
     {
+        tableClients.getItems().clear();
         List<Client> clientList = this.downloadClientsFromDB();
         if (clientList != null)
         {
@@ -151,9 +153,7 @@ public class ScreenClientsController implements Initializable
                 populateTableClients(clientList);
             } else
                 this.showMessage("No clients in database.");
-        } else
-            tableClients.getItems().clear();
-
+        }
         buttonDeleteClient.setDisable(true);
         buttonEditClient.setDisable(true);
         buttonShowClientAdvertisements.setDisable(true);
@@ -199,11 +199,12 @@ public class ScreenClientsController implements Initializable
             Client client = tableClients.getSelectionModel().getSelectedItem();
             try
             {
-                httpHelper.doDelete(URL + "?id=" + client.getId());
+                String result = httpHelper.doDelete(URL + "?id=" + client.getId());
+                if (result.equals("-1"))
+                    showMessage("There are some advertisements bound with this client.");
             } catch (IOException e)
             {
-                this.showMessage("Something went wrong. Contact the administrator.\nMake sure that there are no advertisements" +
-                        "bound with selected client");
+                this.showMessage("Something went wrong. Contact the administrator.");
             }
             this.showClients();
         }

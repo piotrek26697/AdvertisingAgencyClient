@@ -1,5 +1,7 @@
 package main.model.entities;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Client implements Serializable
 {
     private int id;
@@ -17,6 +20,7 @@ public class Client implements Serializable
 
     private String address;
 
+    @XmlTransient
     private List<Advertisement> adsList;
 
     public Client()
@@ -72,7 +76,6 @@ public class Client implements Serializable
         this.address = address;
     }
 
-    @XmlTransient
     public List<Advertisement> getAdsList()
     {
         return adsList;
