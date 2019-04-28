@@ -4,12 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.controllers.clientControllers.ScreenClientsController;
-import main.model.entities.Client;
 import main.model.HttpHelper;
 import main.model.Main;
+import main.model.entities.Client;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;

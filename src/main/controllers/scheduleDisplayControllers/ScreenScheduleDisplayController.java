@@ -15,7 +15,6 @@ import main.model.HttpHelper;
 import main.model.Main;
 import main.model.collections.BillboardOccupations;
 import main.model.entities.Advertisement;
-import main.model.entities.Billboard;
 import main.model.entities.BillboardOccupation;
 
 import javax.xml.bind.JAXB;

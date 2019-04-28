@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.controllers.advertisementControllers.ScreenAdvertisementsController;
 import main.model.HttpHelper;
 import main.model.Main;
 import main.model.entities.Advertisement;

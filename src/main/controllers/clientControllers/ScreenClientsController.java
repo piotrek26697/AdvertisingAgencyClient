@@ -12,7 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.controllers.advertisementControllers.ScreenAdvertisementsController;
-import main.model.*;
+import main.model.HttpHelper;
+import main.model.Main;
 import main.model.collections.Clients;
 import main.model.entities.Client;
 
