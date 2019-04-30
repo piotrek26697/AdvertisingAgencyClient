@@ -1,11 +1,14 @@
 package main.model.entities;
 
+import main.model.LocalDateAdapter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @XmlRootElement
@@ -18,7 +21,8 @@ public class Invoice
 
     private int tax;
 
-    private Calendar date;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate date;
 
     @XmlTransient
     private List<Advertisement> advertisementList;
@@ -58,12 +62,12 @@ public class Invoice
         this.tax = tax;
     }
 
-    public Calendar getDate()
+    public LocalDate getDate()
     {
         return date;
     }
 
-    public void setDate(Calendar date)
+    public void setDate(LocalDate date)
     {
         this.date = date;
     }
