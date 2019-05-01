@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.controllers.scheduleDisplayControllers.ScreenScheduleDisplayController;
+import main.controllers.scheduleDisplayControllers.ScreenSetScheduleDisplayController;
 import main.model.BillboardSize;
 import main.model.HttpHelper;
 import main.model.Main;
@@ -70,6 +72,7 @@ public class ScreenBillboardsController implements Initializable
         buttonClearFields.setOnAction(event -> clearFields());
 
         buttonDetails.setDisable(true);
+        buttonDetails.setOnAction(this::showDetailsWindow);
 
         buttonShowBillboards.setOnAction(event -> showBillboards());
 
@@ -83,6 +86,26 @@ public class ScreenBillboardsController implements Initializable
                 buttonDetails.setDisable(false);
             }
         });
+    }
+
+    private void showDetailsWindow(ActionEvent actionEvent)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screenScheduleDisplay.fxml"));
+        try
+        {
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            ScreenScheduleDisplayController controller = loader.getController();
+            stage.setScene(scene);
+            stage.setTitle("Schedule for billboard");
+            stage.show();
+            controller.setBillboard(tableBillboards.getSelectionModel().getSelectedItem());
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void addBillboardWindow(ActionEvent actionEvent)

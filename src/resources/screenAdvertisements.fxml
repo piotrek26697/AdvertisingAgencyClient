@@ -34,7 +34,7 @@
         <Label layoutX="712.0" layoutY="242.0" text="Price to:"/>
         <Button fx:id="buttonFilter" layoutX="773.0" layoutY="281.0" mnemonicParsing="false" prefHeight="25.0"
                 prefWidth="129.0" text="Filter"/>
-        <Button fx:id="buttonScheduleDisplay" layoutX="773.0" layoutY="513.0" mnemonicParsing="false" prefHeight="25.0"
+        <Button fx:id="buttonPlanDisplay" layoutX="773.0" layoutY="513.0" mnemonicParsing="false" prefHeight="25.0"
                 prefWidth="129.0" text="Schedule display"/>
         <Button fx:id="buttonScheduleDetails" layoutX="774.0" layoutY="562.0" mnemonicParsing="false" prefHeight="25.0"
                 prefWidth="129.0" text="Show display details"/>

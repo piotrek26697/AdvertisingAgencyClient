@@ -15,6 +15,7 @@ import main.model.HttpHelper;
 import main.model.Main;
 import main.model.collections.BillboardOccupations;
 import main.model.entities.Advertisement;
+import main.model.entities.Billboard;
 import main.model.entities.BillboardOccupation;
 
 import javax.xml.bind.JAXB;
@@ -46,6 +47,8 @@ public class ScreenScheduleDisplayController implements Initializable
 
     private Advertisement advertisement;
 
+    private Billboard billboard;
+
     private HttpHelper httpHelper;
 
     @Override
@@ -54,10 +57,10 @@ public class ScreenScheduleDisplayController implements Initializable
         httpHelper = new HttpHelper();
     }
 
-    private void showSchedule()
+    private void showSchedule(int choice)
     {
         table.getItems().clear();
-        List<BillboardOccupation> list = downloadBillboardOccupationListFromDB();
+        List<BillboardOccupation> list = downloadBillboardOccupationListFromDB(choice);
         if (list != null)
         {
             if (list.size() > 0)
@@ -68,11 +71,18 @@ public class ScreenScheduleDisplayController implements Initializable
         }
     }
 
-    private List<BillboardOccupation> downloadBillboardOccupationListFromDB()
+    private List<BillboardOccupation> downloadBillboardOccupationListFromDB(int choice)
     {
         try
         {
-            String result = httpHelper.doGet(URL + "?id=" + advertisement.getId());
+            String result;
+            if (choice == 0)
+                result = httpHelper.doGet(URL + "?ID=" + advertisement.getId() + "&type=adID");
+            else if (choice == 1)
+                result = httpHelper.doGet(URL + "?ID=" + billboard.getId() + "&type=billboardID");
+            else
+                return null;
+
             BillboardOccupations billboardOccupations = JAXB.unmarshal(new StringReader(result), BillboardOccupations.class);
             return billboardOccupations.getList();
         } catch (IOException e)
@@ -90,14 +100,7 @@ public class ScreenScheduleDisplayController implements Initializable
 
     private void populateTableBillboardOccupation(List<BillboardOccupation> list)
     {
-        columnAddress.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillboardOccupation, String>, ObservableValue<String>>()
-        {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<BillboardOccupation, String> param)
-            {
-                return new SimpleStringProperty(param.getValue().getBillboard().getAddress());
-            }
-        });
+        columnAddress.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getBillboard().getAddress()));
         columnName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<BillboardOccupation, String>, ObservableValue<String>>()
         {
             @Override
@@ -114,6 +117,12 @@ public class ScreenScheduleDisplayController implements Initializable
     public void setAdvertisement(Advertisement advertisement)
     {
         this.advertisement = advertisement;
-        showSchedule();
+        showSchedule(0);
+    }
+
+    public void setBillboard(Billboard billboard)
+    {
+        this.billboard = billboard;
+        showSchedule(1);
     }
 }

@@ -59,7 +59,7 @@ public class ScreenAdvertisementsController implements Initializable
     private Button buttonFilter;
 
     @FXML
-    private Button buttonScheduleDisplay;
+    private Button buttonPlanDisplay;
 
     @FXML
     private Button buttonScheduleDetails;
@@ -97,8 +97,9 @@ public class ScreenAdvertisementsController implements Initializable
         buttonDeleteAdvertisement.setDisable(true);
         buttonDeleteAdvertisement.setOnAction(this::deleteAdvertisement);
         buttonEditAdvertisement.setDisable(true);
-        buttonScheduleDisplay.setDisable(true);
-        buttonScheduleDisplay.setOnAction(this::scheduleDisplayWindow);
+
+        buttonPlanDisplay.setDisable(true);
+        buttonPlanDisplay.setOnAction(this::planDisplayWindow);
 
         buttonScheduleDetails.setDisable(true);
         buttonScheduleDetails.setOnAction(this::scheduleDetailsWindow);
@@ -109,7 +110,7 @@ public class ScreenAdvertisementsController implements Initializable
             {
                 buttonDeleteAdvertisement.setDisable(false);
                 buttonEditAdvertisement.setDisable(false);
-                buttonScheduleDisplay.setDisable(false);
+                buttonPlanDisplay.setDisable(false);
                 buttonScheduleDetails.setDisable(false);
             }
         });
@@ -135,7 +136,7 @@ public class ScreenAdvertisementsController implements Initializable
         }
     }
 
-    private void scheduleDisplayWindow(ActionEvent event)
+    private void planDisplayWindow(ActionEvent event)
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/screenSetScheduleDisplay.fxml"));
         try
@@ -212,7 +213,7 @@ public class ScreenAdvertisementsController implements Initializable
         }
         buttonDeleteAdvertisement.setDisable(true);
         buttonEditAdvertisement.setDisable(true);
-        buttonScheduleDisplay.setDisable(true);
+        buttonPlanDisplay.setDisable(true);
         buttonScheduleDetails.setDisable(true);
     }
 
