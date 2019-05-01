@@ -80,6 +80,7 @@ public class ScreenSetScheduleDisplayController implements Initializable
         tableBillboards.setOnMouseClicked(event -> buttonAssignActivation());
 
         pickerDateTo.valueProperty().addListener((observable, oldValue, newValue) -> buttonAssignActivation());
+        pickerDateFrom.valueProperty().addListener((observable, oldValue, newValue) -> buttonAssignActivation());
     }
 
     private void assignDisplay()
