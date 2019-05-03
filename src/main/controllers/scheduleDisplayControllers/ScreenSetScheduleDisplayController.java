@@ -69,18 +69,23 @@ public class ScreenSetScheduleDisplayController implements Initializable
     {
         httpHelper = new HttpHelper();
 
-        buttonAssign.setDisable(true);
-
         buttonShowBillboards.setOnAction(event -> showBillboards());
 
         buttonClearFields.setOnAction(event -> clearFields());
 
         buttonAssign.setOnAction(event -> assignDisplay());
 
-        tableBillboards.setOnMouseClicked(event -> buttonAssignActivation());
+        tableBillboards.setOnMouseClicked(event -> {
+            if (tableBillboards.getSelectionModel().getSelectedItem() != null)
+            {
+                pickerDateTo.setDisable(false);
+                pickerDateFrom.setDisable(false);
+            }
+        });
+        pickerDateFrom.setDisable(true);
+        pickerDateTo.setDisable(true);
 
-        pickerDateTo.valueProperty().addListener((observable, oldValue, newValue) -> buttonAssignActivation());
-        pickerDateFrom.valueProperty().addListener((observable, oldValue, newValue) -> buttonAssignActivation());
+        buttonAssign.setDisable(true);
     }
 
     private void assignDisplay()
@@ -112,15 +117,6 @@ public class ScreenSetScheduleDisplayController implements Initializable
         boxSize.getSelectionModel().clearSelection();
     }
 
-    private void buttonAssignActivation()
-    {
-        if (tableBillboards.getSelectionModel().getSelectedItem() != null && pickerDateFrom.getValue() != null && pickerDateTo.getValue() != null)
-        {
-            buttonAssign.setDisable(false);
-        } else
-            buttonAssign.setDisable(true);
-    }
-
     private void showBillboards()
     {
         List<Billboard> list = downloadBillboardListFromDB();
@@ -135,6 +131,8 @@ public class ScreenSetScheduleDisplayController implements Initializable
             tableBillboards.getItems().clear();
 
         buttonAssign.setDisable(true);
+        pickerDateFrom.setDisable(true);
+        pickerDateTo.setDisable(true);
     }
 
     private List<Billboard> downloadBillboardListFromDB()
