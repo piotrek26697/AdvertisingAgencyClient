@@ -17,7 +17,9 @@ public class Invoice
 {
     private int id;
 
-    private double amount;
+    private double amountNetto;
+
+    private double amountBrutto;
 
     private int tax = 23;
 
@@ -42,14 +44,14 @@ public class Invoice
         this.id = id;
     }
 
-    public double getAmount()
+    public double getAmountNetto()
     {
-        return amount;
+        return amountNetto;
     }
 
-    public void setAmount(double amount)
+    public void setAmountNetto(double amountNetto)
     {
-        this.amount = amount;
+        this.amountNetto = amountNetto;
     }
 
     public int getTax()
@@ -80,5 +82,15 @@ public class Invoice
     public void setAdvertisementList(List<Advertisement> advertisementList)
     {
         this.advertisementList = advertisementList;
+    }
+
+    public double getAmountBrutto()
+    {
+        return amountBrutto;
+    }
+
+    public void setAmountBrutto(double amountBrutto)
+    {
+        this.amountBrutto = amountBrutto;
     }
 }

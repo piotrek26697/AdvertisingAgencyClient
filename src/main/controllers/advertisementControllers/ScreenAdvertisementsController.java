@@ -18,11 +18,14 @@ import main.model.Main;
 import main.model.collections.Advertisements;
 import main.model.entities.Advertisement;
 import main.model.entities.Client;
+import main.model.entities.Invoice;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -84,6 +87,8 @@ public class ScreenAdvertisementsController implements Initializable
 
     private final String URL_ADVERTISEMENT = Main.URL + "/advertisement";
 
+    private final String URL_INVOICE = Main.URL + "/invoice";
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -140,7 +145,21 @@ public class ScreenAdvertisementsController implements Initializable
 
     private void createInvoice()
     {
-        //TODO
+        StringWriter sw = new StringWriter();
+        Advertisements ads = new Advertisements();
+        ads.setAdsList(tableAdvertisements.getSelectionModel().getSelectedItems());
+        try
+        {
+            JAXB.marshal(ads, sw);
+            httpHelper.doPost(URL_INVOICE, sw.toString(), "application/xml");
+
+            showMessage("Invoice created successfully");
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+            showMessage("Something went wrong. Contact the administrator");
+        }
+        showAdvertisements();
     }
 
     private void scheduleDetailsWindow(ActionEvent event)
@@ -242,6 +261,7 @@ public class ScreenAdvertisementsController implements Initializable
         buttonEditAdvertisement.setDisable(true);
         buttonPlanDisplay.setDisable(true);
         buttonScheduleDetails.setDisable(true);
+        buttonCreateInvoice.setDisable(true);
     }
 
     private void populateAdsTable(List<Advertisement> adsList)
