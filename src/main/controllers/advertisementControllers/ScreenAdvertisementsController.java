@@ -65,6 +65,9 @@ public class ScreenAdvertisementsController implements Initializable
     private Button buttonScheduleDetails;
 
     @FXML
+    private Button buttonCreateInvoice;
+
+    @FXML
     private TextField fieldTitle;
 
     @FXML
@@ -104,6 +107,9 @@ public class ScreenAdvertisementsController implements Initializable
         buttonScheduleDetails.setDisable(true);
         buttonScheduleDetails.setOnAction(this::scheduleDetailsWindow);
 
+        buttonCreateInvoice.setDisable(true);
+        buttonCreateInvoice.setOnAction(event -> createInvoice());
+
         tableAdvertisements.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableAdvertisements.setOnMouseClicked(event ->
         {
@@ -113,14 +119,28 @@ public class ScreenAdvertisementsController implements Initializable
                 buttonEditAdvertisement.setDisable(false);
                 buttonPlanDisplay.setDisable(false);
                 buttonScheduleDetails.setDisable(false);
+                buttonCreateInvoice.setDisable(false);
+            } else if (tableAdvertisements.getSelectionModel().getSelectedItems().size() > 1)
+            {
+                buttonCreateInvoice.setDisable(false);
+                buttonDeleteAdvertisement.setDisable(true);
+                buttonEditAdvertisement.setDisable(true);
+                buttonPlanDisplay.setDisable(true);
+                buttonScheduleDetails.setDisable(true);
             } else
             {
+                buttonCreateInvoice.setDisable(true);
                 buttonDeleteAdvertisement.setDisable(true);
                 buttonEditAdvertisement.setDisable(true);
                 buttonPlanDisplay.setDisable(true);
                 buttonScheduleDetails.setDisable(true);
             }
         });
+    }
+
+    private void createInvoice()
+    {
+        //TODO
     }
 
     private void scheduleDetailsWindow(ActionEvent event)

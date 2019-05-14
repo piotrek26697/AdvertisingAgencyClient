@@ -19,7 +19,7 @@ public class Invoice
 
     private double amount;
 
-    private int tax;
+    private int tax = 23;
 
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate date;
