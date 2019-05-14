@@ -104,14 +104,21 @@ public class ScreenAdvertisementsController implements Initializable
         buttonScheduleDetails.setDisable(true);
         buttonScheduleDetails.setOnAction(this::scheduleDetailsWindow);
 
+        tableAdvertisements.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableAdvertisements.setOnMouseClicked(event ->
         {
-            if (tableAdvertisements.getSelectionModel().getSelectedItem() != null)
+            if (tableAdvertisements.getSelectionModel().getSelectedIndices().size() == 1)
             {
                 buttonDeleteAdvertisement.setDisable(false);
                 buttonEditAdvertisement.setDisable(false);
                 buttonPlanDisplay.setDisable(false);
                 buttonScheduleDetails.setDisable(false);
+            } else
+            {
+                buttonDeleteAdvertisement.setDisable(true);
+                buttonEditAdvertisement.setDisable(true);
+                buttonPlanDisplay.setDisable(true);
+                buttonScheduleDetails.setDisable(true);
             }
         });
     }
