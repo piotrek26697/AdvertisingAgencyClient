@@ -107,15 +107,15 @@ public class ScreenSetScheduleDisplayController implements Initializable
 
         boolean test = false;
         for (BillboardOccupation occupation : occupationList)
-           if (pickerDateFrom.getValue().compareTo(occupation.getDateFrom()) < 0)
-               test = true;
+            if (pickerDateFrom.getValue().compareTo(occupation.getDateFrom()) < 0)
+                test = true;
         boolean finalTest = test;
         pickerDateTo.setDayCellFactory(callback -> new DateCell()
         {
-           @Override
-           public void updateItem(LocalDate item, boolean empty)
-           {
-               super.updateItem(item, empty);
+            @Override
+            public void updateItem(LocalDate item, boolean empty)
+            {
+                super.updateItem(item, empty);
 
                 if (finalTest)
                 {
@@ -137,10 +137,10 @@ public class ScreenSetScheduleDisplayController implements Initializable
                 } else
                 {
                     if (item.compareTo(pickerDateFrom.getValue()) < 0)
-                       {
-                          setDisable(true);
-                          setStyle("-fx-background-color: #ffc0cb;");
-                       }
+                    {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #ffc0cb;");
+                    }
                 }
             }
         });
@@ -160,7 +160,7 @@ public class ScreenSetScheduleDisplayController implements Initializable
 
                 setDisable(empty || item.compareTo(LocalDate.now()) < 0);
                 setStyle("-fx-background-color: #FFFFFF;");
-                if(occupationList!=null)
+                if (occupationList != null)
                 {
                     for (BillboardOccupation occupation : occupationList)
                     {
