@@ -80,10 +80,13 @@ public class ScreenSetScheduleDisplayController implements Initializable
         tableBillboards.setOnMouseClicked(event -> {
             if (tableBillboards.getSelectionModel().getSelectedItem() != null)
             {
+                pickerDateTo.setValue(null);
+                pickerDateFrom.setValue(null);
+
                 disableStartingDates();
-                //pickerDateTo.setDisable(false);
+                pickerDateTo.setDisable(true);
                 pickerDateFrom.setDisable(false);
-                //buttonAssign.setDisable(false);
+                buttonAssign.setDisable(true);
             }
         });
         pickerDateFrom.setOnAction(event -> {
@@ -102,7 +105,7 @@ public class ScreenSetScheduleDisplayController implements Initializable
         Billboard billboard = tableBillboards.getSelectionModel().getSelectedItem();
         List<BillboardOccupation> occupationList = downloadOccupationListFromDB(billboard.getId());
 
-        if(occupationList !=null)
+        if (occupationList != null)
         {
             boolean test = false;
             for (BillboardOccupation occupation : occupationList)
@@ -148,15 +151,17 @@ public class ScreenSetScheduleDisplayController implements Initializable
         Billboard billboard = tableBillboards.getSelectionModel().getSelectedItem();
         List<BillboardOccupation> occupationList = downloadOccupationListFromDB(billboard.getId());
 
-        if (occupationList != null)
+        pickerDateFrom.setDayCellFactory(param -> new DateCell()
         {
-            pickerDateFrom.setDayCellFactory(param -> new DateCell()
+            @Override
+            public void updateItem(LocalDate item, boolean empty)
             {
-                @Override
-                public void updateItem(LocalDate item, boolean empty)
-                {
-                    super.updateItem(item, empty);
+                super.updateItem(item, empty);
 
+                setDisable(empty || item.compareTo(LocalDate.now()) < 0);
+                setStyle("-fx-background-color: #FFFFFF;");
+                if(occupationList!=null)
+                {
                     for (BillboardOccupation occupation : occupationList)
                     {
                         if (item.compareTo(occupation.getDateFrom()) >= 0 && item.compareTo(occupation.getDateTo()) <= 0)
@@ -164,15 +169,11 @@ public class ScreenSetScheduleDisplayController implements Initializable
                             setDisable(true);
                             setStyle("-fx-background-color: #ffc0cb;");
                             break;
-                        } else
-                        {
-                            setDisable(empty || item.compareTo(LocalDate.now()) < 0);
-                            setStyle("-fx-background-color: #FFFFFF;");
                         }
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     private void assignDisplay()
