@@ -106,9 +106,10 @@ public class ScreenSetScheduleDisplayController implements Initializable
         List<BillboardOccupation> occupationList = downloadOccupationListFromDB(billboard.getId());
 
         boolean test = false;
-        for (BillboardOccupation occupation : occupationList)
-            if (pickerDateFrom.getValue().compareTo(occupation.getDateFrom()) < 0)
-                test = true;
+        if (occupationList != null)
+            for (BillboardOccupation occupation : occupationList)
+                if (pickerDateFrom.getValue().compareTo(occupation.getDateFrom()) < 0)
+                    test = true;
         boolean finalTest = test;
         pickerDateTo.setDayCellFactory(callback -> new DateCell()
         {
