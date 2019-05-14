@@ -118,7 +118,7 @@ public class ScreenAdvertisementsController implements Initializable
 
     private void scheduleDetailsWindow(ActionEvent event)
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screenScheduleDisplay.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/screenScheduleDisplay.fxml"));
         try
         {
             Parent root = loader.load();
@@ -138,7 +138,7 @@ public class ScreenAdvertisementsController implements Initializable
 
     private void planDisplayWindow(ActionEvent event)
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screenSetScheduleDisplay.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/screenSetScheduleDisplay.fxml"));
         try
         {
             Parent root = loader.load();

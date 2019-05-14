@@ -143,7 +143,7 @@ public class ScreenClientsController implements Initializable
         }
     }
 
-    public void showClients()
+    void showClients()
     {
         tableClients.getItems().clear();
         List<Client> clientList = this.downloadClientsFromDB();

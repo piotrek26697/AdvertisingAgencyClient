@@ -77,9 +77,9 @@ public class ScreenScheduleDisplayController implements Initializable
         {
             String result;
             if (choice == 0)
-                result = httpHelper.doGet(URL + "?ID=" + advertisement.getId() + "&type=adID");
+                result = httpHelper.doGet(URL + "?ID=" + advertisement.getId() + "&type=adID&enableHistory=true");
             else if (choice == 1)
-                result = httpHelper.doGet(URL + "?ID=" + billboard.getId() + "&type=billboardID");
+                result = httpHelper.doGet(URL + "?ID=" + billboard.getId() + "&type=billboardID&enableHistory=true");
             else
                 return null;
 
