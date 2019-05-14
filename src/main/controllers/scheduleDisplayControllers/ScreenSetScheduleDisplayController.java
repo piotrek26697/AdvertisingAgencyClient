@@ -8,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import main.model.BillboardSize;
 import main.model.HttpHelper;
 import main.model.Main;
+import main.model.collections.BillboardOccupations;
 import main.model.collections.Billboards;
 import main.model.entities.Advertisement;
 import main.model.entities.Billboard;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -78,37 +80,132 @@ public class ScreenSetScheduleDisplayController implements Initializable
         tableBillboards.setOnMouseClicked(event -> {
             if (tableBillboards.getSelectionModel().getSelectedItem() != null)
             {
-                pickerDateTo.setDisable(false);
+                disableStartingDates();
+                //pickerDateTo.setDisable(false);
                 pickerDateFrom.setDisable(false);
+                //buttonAssign.setDisable(false);
             }
         });
+        pickerDateFrom.setOnAction(event -> {
+            pickerDateTo.setDisable(false);
+            disableEndingDates();
+        });
         pickerDateFrom.setDisable(true);
+        pickerDateTo.setOnAction(event -> buttonAssign.setDisable(false));
         pickerDateTo.setDisable(true);
 
         buttonAssign.setDisable(true);
     }
 
+    private void disableEndingDates()
+    {
+        Billboard billboard = tableBillboards.getSelectionModel().getSelectedItem();
+        List<BillboardOccupation> occupationList = downloadOccupationListFromDB(billboard.getId());
+
+        if(occupationList !=null)
+        {
+            boolean test = false;
+            for (BillboardOccupation occupation : occupationList)
+                if (pickerDateFrom.getValue().compareTo(occupation.getDateFrom()) < 0)
+                    test = true;
+            boolean finalTest = test;
+            pickerDateTo.setDayCellFactory(callback -> new DateCell()
+            {
+                @Override
+                public void updateItem(LocalDate item, boolean empty)
+                {
+                    super.updateItem(item, empty);
+
+                    if (finalTest)
+                    {
+                        for (BillboardOccupation occupation : occupationList)
+                        {
+                            if (item.compareTo(pickerDateFrom.getValue()) >= 0 && item.compareTo(occupation.getDateFrom()) < 0)
+                            {
+                                setDisable(false);
+                                setStyle("-fx-background-color: #FFFFFF;");
+                            } else
+                            {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                        }
+                    } else
+                    {
+                        if (item.compareTo(pickerDateFrom.getValue()) < 0)
+                        {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;");
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private void disableStartingDates()
+    {
+        Billboard billboard = tableBillboards.getSelectionModel().getSelectedItem();
+        List<BillboardOccupation> occupationList = downloadOccupationListFromDB(billboard.getId());
+
+        if (occupationList != null)
+        {
+            pickerDateFrom.setDayCellFactory(param -> new DateCell()
+            {
+                @Override
+                public void updateItem(LocalDate item, boolean empty)
+                {
+                    super.updateItem(item, empty);
+
+                    for (BillboardOccupation occupation : occupationList)
+                    {
+                        if (item.compareTo(occupation.getDateFrom()) >= 0 && item.compareTo(occupation.getDateTo()) <= 0)
+                        {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;");
+                            break;
+                        } else
+                        {
+                            setDisable(empty || item.compareTo(LocalDate.now()) < 0);
+                            setStyle("-fx-background-color: #FFFFFF;");
+                        }
+                    }
+                }
+            });
+        }
+    }
+
     private void assignDisplay()
     {
-        BillboardOccupation billboardOccupation = new BillboardOccupation();
-        billboardOccupation.setAdvertisement(advertisement);
-        billboardOccupation.setBillboard(tableBillboards.getSelectionModel().getSelectedItem());
-        billboardOccupation.setDateFrom(pickerDateFrom.getValue());
-        billboardOccupation.setDateTo(pickerDateTo.getValue());
+        if (pickerDateFrom.getValue() == null || pickerDateTo.getValue() == null)
+        {
+            showMessage("Please enter dates");
+        } else
+        {
 
-        StringWriter sw = new StringWriter();
-        JAXB.marshal(billboardOccupation, sw);
-        try
-        {
-            httpHelper.doPost(URL_BILLBOARD_OCCUPATION, sw.toString(), "application/xml");
-            showMessage("Scheduled successfully");
-            pickerDateTo.getEditor().clear();
-            pickerDateFrom.getEditor().clear();
-        } catch (IOException e)
-        {
-            showMessage("Something went wrong. Contact the administrator.");
+            BillboardOccupation billboardOccupation = new BillboardOccupation();
+            billboardOccupation.setAdvertisement(advertisement);
+            billboardOccupation.setBillboard(tableBillboards.getSelectionModel().getSelectedItem());
+            billboardOccupation.setDateFrom(pickerDateFrom.getValue());
+            billboardOccupation.setDateTo(pickerDateTo.getValue());
+
+            StringWriter sw = new StringWriter();
+            JAXB.marshal(billboardOccupation, sw);
+            try
+            {
+                httpHelper.doPost(URL_BILLBOARD_OCCUPATION, sw.toString(), "application/xml");
+                showMessage("Scheduled successfully");
+                pickerDateTo.getEditor().clear();
+                pickerDateFrom.getEditor().clear();
+            } catch (IOException e)
+            {
+                showMessage("Something went wrong. Contact the administrator.");
+            }
+
+            pickerDateTo.setValue(null);
+            pickerDateFrom.setValue(null);
+            this.disableStartingDates();
         }
-
     }
 
     private void clearFields()
@@ -133,6 +230,21 @@ public class ScreenSetScheduleDisplayController implements Initializable
         buttonAssign.setDisable(true);
         pickerDateFrom.setDisable(true);
         pickerDateTo.setDisable(true);
+    }
+
+    private List<BillboardOccupation> downloadOccupationListFromDB(int id)
+    {
+        String params = URL_BILLBOARD_OCCUPATION + "?ID=" + id + "&type=billboardID&enableHistory=false";
+        try
+        {
+            String result = httpHelper.doGet(params);
+            BillboardOccupations occupations = JAXB.unmarshal(new StringReader(result), BillboardOccupations.class);
+            return occupations.getList();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private List<Billboard> downloadBillboardListFromDB()
