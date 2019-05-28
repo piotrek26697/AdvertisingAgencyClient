@@ -90,7 +90,7 @@ public class ScreenBillboardsController implements Initializable
 
     private void showDetailsWindow(ActionEvent actionEvent)
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screenScheduleDisplay.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/screenScheduleDisplay.fxml"));
         try
         {
             Parent root = loader.load();

@@ -197,16 +197,11 @@ public class ScreenSetScheduleDisplayController implements Initializable
             {
                 httpHelper.doPost(URL_BILLBOARD_OCCUPATION, sw.toString(), "application/xml");
                 showMessage("Scheduled successfully");
-                pickerDateTo.getEditor().clear();
-                pickerDateFrom.getEditor().clear();
             } catch (IOException e)
             {
                 showMessage("Something went wrong. Contact the administrator.");
             }
-
-            pickerDateTo.setValue(null);
-            pickerDateFrom.setValue(null);
-            this.disableStartingDates();
+            showBillboards();
         }
     }
 
