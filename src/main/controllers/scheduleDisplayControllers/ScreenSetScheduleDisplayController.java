@@ -105,21 +105,21 @@ public class ScreenSetScheduleDisplayController implements Initializable
         Billboard billboard = tableBillboards.getSelectionModel().getSelectedItem();
         List<BillboardOccupation> occupationList = downloadOccupationListFromDB(billboard.getId());
 
-        if (occupationList != null)
+        boolean test = false;
+        for (BillboardOccupation occupation : occupationList)
+           if (pickerDateFrom.getValue().compareTo(occupation.getDateFrom()) < 0)
+               test = true;
+        boolean finalTest = test;
+        pickerDateTo.setDayCellFactory(callback -> new DateCell()
         {
-            boolean test = false;
-            for (BillboardOccupation occupation : occupationList)
-                if (pickerDateFrom.getValue().compareTo(occupation.getDateFrom()) < 0)
-                    test = true;
-            boolean finalTest = test;
-            pickerDateTo.setDayCellFactory(callback -> new DateCell()
-            {
-                @Override
-                public void updateItem(LocalDate item, boolean empty)
-                {
-                    super.updateItem(item, empty);
+           @Override
+           public void updateItem(LocalDate item, boolean empty)
+           {
+               super.updateItem(item, empty);
 
-                    if (finalTest)
+                if (finalTest)
+                {
+                    if (occupationList != null)
                     {
                         for (BillboardOccupation occupation : occupationList)
                         {
@@ -133,17 +133,17 @@ public class ScreenSetScheduleDisplayController implements Initializable
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
                         }
-                    } else
-                    {
-                        if (item.compareTo(pickerDateFrom.getValue()) < 0)
-                        {
-                            setDisable(true);
-                            setStyle("-fx-background-color: #ffc0cb;");
-                        }
                     }
+                } else
+                {
+                    if (item.compareTo(pickerDateFrom.getValue()) < 0)
+                       {
+                          setDisable(true);
+                          setStyle("-fx-background-color: #ffc0cb;");
+                       }
                 }
-            });
-        }
+            }
+        });
     }
 
     private void disableStartingDates()
