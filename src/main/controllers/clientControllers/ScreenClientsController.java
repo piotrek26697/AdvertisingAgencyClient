@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.controllers.advertisementControllers.ScreenAdvertisementsController;
+import main.controllers.invoiceControllers.ScreenInvoicesController;
 import main.model.HttpHelper;
 import main.model.Main;
 import main.model.collections.Clients;
@@ -60,6 +61,9 @@ public class ScreenClientsController implements Initializable
     private Button buttonMenu;
 
     @FXML
+    private Button buttonShowClientInvoices;
+
+    @FXML
     private TextField fieldName;
 
     @FXML
@@ -92,6 +96,9 @@ public class ScreenClientsController implements Initializable
         buttonDeleteClient.setDisable(true);
         buttonDeleteClient.setOnAction(event -> deleteClient());
 
+        buttonShowClientInvoices.setDisable(true);
+        buttonShowClientInvoices.setOnAction(this::showInvoicesWindow);
+
         buttonShowClients.setOnAction((event) -> showClients());
 
         buttonAddClient.setOnAction((event -> addingClientWindow()));
@@ -104,8 +111,29 @@ public class ScreenClientsController implements Initializable
                 buttonDeleteClient.setDisable(false);
                 buttonEditClient.setDisable(false);
                 buttonShowClientAdvertisements.setDisable(false);
+                buttonShowClientInvoices.setDisable(false);
             }
         });
+    }
+
+    private void showInvoicesWindow(ActionEvent actionEvent)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/screenInvoices.fxml"));
+            Parent root = loader.load();
+            ScreenInvoicesController controller = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Invoices");
+            stage.setScene(scene);
+            stage.show();
+            controller.setClient(client);
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+            showMessage("Something went wrong. Contact the administrator.");
+        }
     }
 
     private void goToMenu(ActionEvent event)
@@ -158,6 +186,7 @@ public class ScreenClientsController implements Initializable
         buttonDeleteClient.setDisable(true);
         buttonEditClient.setDisable(true);
         buttonShowClientAdvertisements.setDisable(true);
+        buttonShowClientInvoices.setDisable(true);
     }
 
     private void clearFields()

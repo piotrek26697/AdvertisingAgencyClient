@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.invoiceControllers.ScreenInvoicesController">
+
+    <children>
+        <TableView fx:id="tableInvoices" layoutX="24.0" layoutY="79.0" prefHeight="210.0" prefWidth="553.0">
+            <columns>
+                <TableColumn fx:id="columnNumber" prefWidth="150.0" text="Invoice number" />
+                <TableColumn fx:id="columnDate" prefWidth="77.0" text="Date" />
+            <TableColumn fx:id="columnTax" prefWidth="75.0" text="Tax" />
+                <TableColumn fx:id="columnNetto" minWidth="0.0" prefWidth="130.0" text="Netto" />
+                <TableColumn fx:id="columnBrutto" prefWidth="120.0" text="Brutto" />
+            </columns>
+        </TableView>
+      <Label fx:id="labelTitle" layoutX="24.0" layoutY="14.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonDetails" layoutX="245.0" layoutY="323.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Show details" />
+    </children>
+</AnchorPane>
