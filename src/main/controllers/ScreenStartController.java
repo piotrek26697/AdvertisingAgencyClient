@@ -33,6 +33,7 @@ public class ScreenStartController implements Initializable
     {
         buttonLoadAdvertisementsView.setDisable(true);
         buttonLoadAdvertisementsView.setOnAction(this::loadAdvertisementsView);
+        buttonLoadAdvertisementsView.setVisible(false);
 
         buttonLoadBillboardsView.setOnAction(this::loadBillboardsView);
 
@@ -40,6 +41,7 @@ public class ScreenStartController implements Initializable
 
         buttonLoadInvoicesView.setDisable(true);
         buttonLoadInvoicesView.setOnAction(this::loadInvoicesView);
+        buttonLoadInvoicesView.setVisible(false);
     }
 
     private void loadInvoicesView(ActionEvent event)
